@@ -1,0 +1,39 @@
+#! /bin/bash
+export TERM="xterm-256color"
+
+
+alias ping='cygping'
+
+# Powerlevel9k theme and preferences
+source ~/.zsh/powerlevel9k/powerlevel9k.zsh-theme
+#POWERLEVEL9K_DISABLE_RPROMPT=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="↱"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="↳ "
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status )
+POWERLEVEL9K_COLOR_SCHEME='light'
+
+# https://github.com/gabrielelana/awesome-terminal-fonts
+source ~/.local/shared/fonts/*.sh
+
+# User configuration
+
+#export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"

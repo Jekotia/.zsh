@@ -1,0 +1,8 @@
+#compdef connect
+
+# https://askql.wordpress.com/2011/01/11/zsh-writing-own-completion/
+
+#_arguments "1: :(`~/bin/connect opts`)"
+
+_arguments "1: :(`~/bin/connect protocols`)"
+_arguments "2: :(`~/bin/connect hosts`)"
