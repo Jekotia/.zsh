@@ -23,4 +23,4 @@ fi
 cd ~/.zsh/extras/powerline-fonts/
 sh ./install.sh
 
-~/.zsh/awesome-terminal-fonts-setup.sh
+~/.zsh/extras/awesome-terminal-fonts-setup.sh
