@@ -1,6 +1,14 @@
 #! /bin/bash
 
-yum -y install wget curl nano zsh git bc
+if which yum > /dev/null; then
+	pkgMgr="yum"
+elif which apt-get > /dev/null; then
+	pkgMgr="apt-get"
+elif which apt-cyg > /dev/null; then
+	pkgMgr="apt-cyg"
+fi
+
+$pkgMgr -y install wget curl nano zsh git bc
 
 echo --- Cloning \'.zsh\' from origin
 git clone http://saturn.jekotia.net:3000/jekotia/.zsh.git
@@ -11,3 +19,8 @@ else
 	echo --- Updating local /etc/zshenv
 	echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zshenv
 fi
+
+cd ~/.zsh/extras/powerline-fonts/
+sh ./install.sh
+
+~/.zsh/awesome-terminal-fonts-setup.sh

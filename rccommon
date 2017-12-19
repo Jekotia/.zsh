@@ -1,17 +1,23 @@
 #! /bin/bash
 
-# https://github.com/mavnn/mintty-colors-solarized
-source ~/.zsh/mintty-colors-solarized/sol.dark
+### https://github.com/mavnn/mintty-colors-solarized
+if [[ -e ~/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
+	source ~/.zsh/extras/mintty-colors-solarized/sol.dark
+fi
 
-# https://github.com/seebi/dircolors-solarized
-eval `dircolors ~/.zsh/dircolors-solarized/dircolors.ansi-dark`
+### https://github.com/seebi/dircolors-solarized
+if [[ -e ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
+	eval `dircolors ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
+fi
 
 # Set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/bin" ] ; then
  PATH="${HOME}/bin:${PATH}"
 fi
 
-PATH="~/.zsh/bin:${PATH}"
+if [ -d "~/.zsh/bin" ] ; then 
+	PATH="~/.zsh/bin:${PATH}"
+fi
 
 export HISTFILE=~/.zsh/history
 setopt INC_APPEND_HISTORY
@@ -20,7 +26,9 @@ setopt HIST_EXPIRE_DUPS_FIRST
 export HISTSIZE=1000
 
 # Completions
-fpath=(~/.zsh/completion $fpath)
+if [ -d ~/.zsh/completion ] ; then
+	fpath=(~/.zsh/completion $fpath)
+fi
 autoload -Uz compinit promptinit
 compinit -d ~/.zsh/compdump
 promptinit
