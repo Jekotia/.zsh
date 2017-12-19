@@ -6,3 +6,5 @@
 
 _arguments "1: :(`~/bin/connect protocols`)"
 _arguments "2: :(`~/bin/connect hosts`)"
+_arguments "3: :(run)"
+_arguments "4: :(~/.zsh/shell-remote.sh)"
