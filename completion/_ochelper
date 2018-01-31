@@ -1,0 +1,31 @@
+#compdef ochelper
+
+# https://askql.wordpress.com/2011/01/11/zsh-writing-own-completion/
+
+#_arguments "1: :(`~/.zsh/bin/ochelper args 1`)"
+#_arguments "2: :(`~/.zsh/bin/ochelper args 2`)"
+
+_ochelper() { 
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+ 
+    _arguments \
+        '1: :->mode'\
+        '*: :->target'
+ 
+    case $state in
+    mode)
+        _arguments '1:Modes:(perms update)'
+    ;;
+    *)
+        case $words[2] in
+        perms)
+            compadd "$@" update secure
+        ;;
+        *)
+            _files 
+        esac
+    esac
+}
+ 
+_ochelper "$@"

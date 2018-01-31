@@ -1,9 +1,15 @@
 #! /bin/bash
 
-source ~/.zsh/rccommon
+if [ -e ~/.zsh/rccommon ] ; then
+	source ~/.zsh/rccommon
+fi
 
 if [[ "$USERNAME" == "root" ]] ; then
-	source ~/.zsh/rcroot
+	if [ -e ~/.zsh/rcroot ] ; then
+		source ~/.zsh/rcroot
+	fi
 else
-	source ~/.zsh/rclocal
+	if [ -e ~/.zsh/rclocal ] ; then
+		source ~/.zsh/rclocal
+	fi
 fi

@@ -1,0 +1,115 @@
+#!/bin/bash
+
+configDir=~/.config/ochelper
+configFile=ochelper.conf
+
+function writeConfig () {
+	if [ ! -e $configDir/$configFile ] ; then		
+		if [ ! -e $configDir ] ; then
+			mkdir $configDir
+		fi
+		touch $configDir/$configFile
+		echo "ocpath='/var/www/html/owncloud'" >> $configDir/$configFile
+		echo "ocdata='/var/www/html/owncloud/data'" >> $configDir/$configFile
+		echo "ocbackuppath='/var/www/html/ocbackup'" >> $configDir/$configFile
+		echo "htuser='apache'" >> $configDir/$configFile
+		echo "htgroup='apache'" >> $configDir/$configFile
+		echo "rootuser='root'" >> $configDir/$configFile
+	fi
+}
+
+writeConfig
+
+source $configDir/ochelper.conf
+
+function oc_perms_upgrade () {
+	# Sets permissions of the owncloud instance for updating
+	echo "Preparing ownCloud for upgrade"
+	chown -R ${htuser}:${htgroup} ${ocpath}
+}
+
+function oc_perms_secure () {
+	echo "Setting secure permissions for ownCloud files & folders"
+	echo "Creating possible missing Directories"
+	mkdir -p $ocdata
+	mkdir -p $ocpath/assets
+	mkdir -p $ocpath/themes
+	mkdir -p $ocpath/updater
+
+	echo "chmod Files and Directories"
+	find ${ocpath}/ -type f -print0 | xargs -0 chmod 0640
+	find ${ocpath}/ -type d -print0 | xargs -0 chmod 0750
+	find ${ocdata}/ -type f -print0 | xargs -0 chmod 0640
+	find ${ocdata}/ -type d -print0 | xargs -0 chmod 0750
+
+	echo "chown Directories"
+	chown -R ${rootuser}:${htgroup} ${ocpath}/
+	chown -R ${htuser}:${htgroup} ${ocpath}/apps/
+	chown -R ${htuser}:${htgroup} ${ocpath}/assets/
+	chown -R ${htuser}:${htgroup} ${ocpath}/config/
+	chown -R ${htuser}:${htgroup} ${ocdata}/
+	chown -R ${htuser}:${htgroup} ${ocpath}/themes/
+	chown -R ${htuser}:${htgroup} ${ocpath}/updater/
+
+	chmod +x ${ocpath}/occ
+
+	printf "chmod/chown .htaccess\n"
+	if [ -f ${ocpath}/.htaccess ] ;	then
+		chmod 0644 ${ocpath}/.htaccess
+		chown ${rootuser}:${htgroup} ${ocpath}/.htaccess
+	fi
+	if [ -f ${ocdata}/.htaccess ] ; then
+		chmod 0644 ${ocdata}/.htaccess
+		chown ${rootuser}:${htgroup} ${ocdata}/.htaccess
+	fi
+}
+
+function oc_upgrade () {
+	sudo -u apache php ${ocpath}/occ app:disable theme-ysl
+	mkdir -p ${ocbackuppath}/apps
+	mv ${ocpath}/apps/theme-ysl ${ocbackuppath}/apps
+	oc_perms_upgrade
+	sudo -u apache php ${ocpath}/occ upgrade
+	mv ${ocbackuppath}/apps/theme-ysl ${ocpath}/apps
+	sudo -u apache php ${ocpath}/occ app:enable theme-ysl
+	oc_perms_secure
+	echo "If everything worked as expected, you should run the below command to exit maintenance mode:"
+	echo "sudo -u apache php ${ocpath}/occ maintenance:mode --off"
+}
+
+function oc_usage () {
+	echo "Usage: $0 perms update|secure"
+	echo "Usage: $0 update"
+}
+
+case $1 in
+	perm|perms|permission|permissions)
+		case $2 in
+			update|upgrade)
+				oc_perms_upgrade
+			;;
+			secure)
+				oc_perms_secure
+			;;
+			*)
+				oc_usage
+			;;
+		esac
+	;;
+	update|upgrade)
+		oc_upgrade
+	;;
+	args)
+		case $2 in
+			"1")
+				echo "perms update"
+			;;
+			"2")
+				echo "update secure"
+			;;
+		esac
+	;;
+	*)
+		oc_usage
+	;;
+esac

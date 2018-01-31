@@ -1,15 +1,16 @@
-#! /bin/bash
+#! /bin/zsh
 export TERM="xterm-256color"
 
-
-alias ping='cygping'
-alias cyg-update
+#alias ping='cygping'
+#alias cyg-update
+alias tracert='mtr'
 
 if [ -d ~/.zsh/functions ] ; then
 	for f in ~/.zsh/functions/* ; do source $f; done
 	_fixpath
 fi
 
+### https://github.com/bhilburn/powerlevel9k
 # Powerlevel9k theme and preferences
 #if [ -e ~/.zsh/extras/powerlevel9k/powerlevel9k.zsh-theme ] ; then
 #	source ~/.zsh/extras/powerlevel9k/powerlevel9k.zsh-theme
@@ -22,6 +23,7 @@ fi
 #	POWERLEVEL9K_COLOR_SCHEME='light'
 #fi
 
+### https://github.com/b-ryan/powerline-shell
 if [ -e ~/.zsh/extras/powerline-shell.sh ] ; then
 	source ~/.zsh/extras/powerline-shell.sh
 fi

@@ -2,9 +2,38 @@
 
 # https://askql.wordpress.com/2011/01/11/zsh-writing-own-completion/
 
-#_arguments "1: :(`~/bin/connect opts`)"
+#_arguments "1: :(`~/bin/connect args 01`)"
+#_arguments "2: :(`~/bin/connect args 21`)"
 
-_arguments "1: :(`~/bin/connect protocols`)"
-_arguments "2: :(`~/bin/connect hosts`)"
-_arguments "3: :(run)"
-_arguments "4: :(~/.zsh/shell-remote.sh)"
+scrpath="$HOME/bin/unix-tools/connect"
+
+
+_connect() {
+	local curcontext="$curcontext" state line
+	typeset -A opt_args
+
+	_arguments '1: :->mode'
+
+	case $state in
+		mode)
+			_arguments '1: :(ssh sftp tools)'
+		;;
+		*)
+			case $words[2] in
+				ssh|sftp)
+					_arguments '2:Hosts:(`$scrpath args 21`)'
+				;;
+				tools)
+					_arguments '2: :(`$scrpath args 22`)'
+					case $words[3] in
+						rm|install)
+							_arguments '3:Hosts:(`$scrpath args 21`)'
+						;;
+					esac
+				;;
+			esac
+		;;
+	esac
+}
+
+_connect "$@"

@@ -10,13 +10,29 @@ if [[ -e ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
 	eval `dircolors ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
 fi
 
-# Set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/bin" ] ; then
- PATH="${HOME}/bin:${PATH}"
+# Set PATH so it includes /usr/local/sbin if it exists
+if [ -d "/usr/local/sbin" ] ; then
+ PATH="/usr/local/sbin:${PATH}"
 fi
 
-if [ -d "~/.zsh/bin" ] ; then 
-	PATH="~/.zsh/bin:${PATH}"
+# Set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+ PATH="$HOME/bin:${PATH}"
+fi
+
+# Set PATH so that it includes unix-tools project bin
+if [ -d "$HOME/bin/unix-tools" ] ; then
+        PATH="$HOME/bin/unix-tools:${PATH}"
+fi
+
+# Set PATH so that it includes work-tools project bin
+if [ -d "$HOME/bin/work-tools" ] ; then
+        PATH="$HOME/bin/work-tools:${PATH}"
+fi
+
+# Set PATH so that it includes MY private bin
+if [ -d "$HOME/.zsh/bin" ] ; then 
+	PATH="$HOME/.zsh/bin:${PATH}"
 fi
 
 export HISTFILE=~/.zsh/history
@@ -25,10 +41,25 @@ export SAVEHIST=3000
 setopt HIST_EXPIRE_DUPS_FIRST
 export HISTSIZE=1000
 
+# Make sure nano highlighting is turned on
+if [[ -e ~/.nanorc ]] ; then
+	if ! cat .nanorc | grep "include /usr/share/nano/sh.nanorc" > /dev/null ; then
+		echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
+	fi
+else
+	touch ~/.nanorc
+	echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
+fi
+
+
 # Completions
 if [ -d ~/.zsh/completion ] ; then
 	fpath=(~/.zsh/completion $fpath)
 fi
+
+
+
+
 autoload -Uz compinit promptinit
 compinit -d ~/.zsh/compdump
 promptinit
