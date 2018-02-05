@@ -1,5 +1,7 @@
 #! /bin/bash
 
+user=$USER
+
 if which yum > /dev/null; then
 	pkgMgr="yum"
 elif which apt-get > /dev/null; then
@@ -8,19 +10,19 @@ elif which apt-cyg > /dev/null; then
 	pkgMgr="apt-cyg"
 fi
 
-$pkgMgr -y install wget curl nano zsh git bc
+sudo $pkgMgr -y install wget curl nano zsh git bc
 
 echo --- Cloning \'.zsh\' from origin
-git clone http://saturn.jekotia.net:3000/jekotia/.zsh.git
+git clone http://git.jekotia.net/jekotia/.zsh.git
 
 if ( grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zshenv" ) ; then
 	echo --- WARNING: Did not update /etc/zshenv
 else
 	echo --- Updating local /etc/zshenv
-	echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zshenv
+	sudo echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zshenv
 fi
 
-cd ~/.zsh/extras/powerline-fonts/
+cd /home/$user/.zsh/extras/powerline-fonts/
 sh ./install.sh
 
-~/.zsh/extras/awesome-terminal-fonts-setup.sh
+cd /home/$user/.zsh/extras/awesome-terminal-fonts-setup.sh
