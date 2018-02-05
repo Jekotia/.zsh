@@ -1,6 +1,6 @@
 #! /bin/bash
 
-user=$USER
+user=`who am i | awk '{print $1}'`
 
 if which yum > /dev/null; then
 	pkgMgr="yum"
