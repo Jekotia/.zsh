@@ -1,2 +1,2 @@
 Install with:
- > install curl && curl -L http://saturn.jekotia.net:3000/jekotia/.zsh/raw/master/shell-setup.sh | bash
+ > install curl && curl -L http://git.jekotia.net/jekotia/.zsh/raw/master/shell-setup.sh | bash
