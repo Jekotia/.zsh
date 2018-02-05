@@ -15,14 +15,22 @@ sudo $pkgMgr -y install wget curl nano zsh git bc
 echo --- Cloning \'.zsh\' from origin
 git clone http://git.jekotia.net/jekotia/.zsh.git
 
-if ( grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zshenv" ) ; then
-	echo --- WARNING: Did not update /etc/zshenv
+if ( grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zshenv" || grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zsh/zshenv" ) ; then
+	echo --- WARNING: Did not update zshenv
 else
-	echo --- Updating local /etc/zshenv
-	sudo echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zshenv
+	if [ -e /etc/zshenv ] ; then
+		echo --- Updating local /etc/zshenv
+		sudo echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zshenv
+	elif [ -e /etc/zsh/zshenv ] ; then
+		echo --- Updating local /etc/zsh/zshenv
+		sudo echo "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" >> /etc/zsh/zshenv
+	else
+		echo "WARNING: Failed to find zshenv file!"
+	fi
 fi
 
 cd /home/$user/.zsh/extras/powerline-fonts/
 sh ./install.sh
 
-cd /home/$user/.zsh/extras/awesome-terminal-fonts-setup.sh
+cd /home/$user/.zsh/extras/
+sh ./awesome-terminal-fonts-setup.sh
