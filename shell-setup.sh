@@ -29,8 +29,8 @@ else
 	fi
 fi
 
-cd /.zsh/extras/powerline-fonts/
+cd /home/$user/.zsh/extras/powerline-fonts/
 sudo -u $user sh ./install.sh
 
-cd $userDir/.zsh/extras/
+cd /home/$user/.zsh/extras/
 sudo -u $user sh ./awesome-terminal-fonts-setup.sh
