@@ -1,6 +1,6 @@
 #! /bin/bash
 
-user=$USER
+userDir=/home/$USER/
 
 if which yum > /dev/null; then
 	pkgMgr="yum"
@@ -29,8 +29,8 @@ else
 	fi
 fi
 
-cd /home/$user/.zsh/extras/powerline-fonts/
+cd $userDir/.zsh/extras/powerline-fonts/
 sh ./install.sh
 
-cd /home/$user/.zsh/extras/
+cd $userDir/.zsh/extras/
 sh ./awesome-terminal-fonts-setup.sh
