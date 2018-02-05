@@ -35,6 +35,20 @@ if [ $count != 0 ] ; then
 fi 
 
 
+# startup of the ssh-agent
+AGENT_PID=$(pgrep -x ssh-agent)
+if [ $? -ne 0 ]; then
+  echo "---- INFO: ~/.zsh/rclocal: Starting SSH Agent!"
+
+  eval `ssh-agent -s` 2> /dev/null && ssh-add ~/.ssh/id_jameli 2> /dev/null && ssh-add ~/.ssh/id_git 2> /dev/null 
+  set SSH_AUTH_SOCK $SSH_AUTH_SOCK
+  set SSH_AGENT_PID $SSH_AGENT_PID
+
+  echo "---- INFO: ~/.zsh/rclocal: SSH Agent running (PID: $SSH_AGENT_PID)"
+else
+  echo "---- INFO: ~/.zsh/rclocal: SSH Agent already running (PID: $AGENT_PID)"
+fi
+
 
 # User configuration
 
