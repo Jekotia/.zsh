@@ -4,7 +4,7 @@ if [ -e ~/.zsh/rccommon ] ; then
 	source ~/.zsh/rccommon
 fi
 
-if [[ "$USERNAME" == "root" ]] ; then
+if [[ "$USERNAME" == "root" || "$USERNAME" == "pi"]] ; then
 	if [ -e ~/.zsh/rcroot ] ; then
 		source ~/.zsh/rcroot
 	fi
