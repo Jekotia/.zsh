@@ -7,11 +7,11 @@ echo "origUser = $origUser"
 #if [[ "$origuser" == "" ]] ; then
 #	echo "ERROR: Unable to determine which user invoked this script"
 #	exit 1
-#elif [[ "$origUser" == "root" ]] ; then
-#	origHome="/root"
-#else
-#	origHome="/home/$origUser"
-#fi
+if [[ "$origUser" == "root" ]] ; then
+	origHome="/root"
+else
+	origHome="/home/$origUser"
+fi
 
 
 if which yum > /dev/null; then
