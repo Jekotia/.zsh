@@ -1,0 +1,57 @@
+#! /bin/bash
+
+keyUser=weechat
+keyPath=/home/$keyUser/.weechat/certs
+keyFile=${keyPath}/$1.pem
+keySubj="/emailAddress=contact@jekotia.net/CN=jekotia.net/ST=Ontario/C=CA"
+echoCmd=""
+
+function keyMake () {
+	case $1 in
+		freenode|spigot) ## https://www.weechat.org/files/doc/stable/weechat_user.en.html#irc_connect_oftc_with_certfp
+			sudo openssl req -x509 -new -newkey rsa:4096 -days 1000 -nodes -out $keyFile -keyout $keyFile -subj "$keySubj"
+			echoCmd="/msg NickServ CERT ADD "
+		;;
+		rizon) ## https://wiki.rizon.net/index.php?title=SASL#SASL_EXTERNAL
+			sudo openssl req -x509 -newkey rsa:4096 -days 1000 -nodes -out $keyFile -keyout $keyFile -subj "$keySubj"
+			echoCmd="/msg NickServ ACCESS ADD FINGERPRINT "
+		;;
+	esac
+}
+
+case $1 in
+	freenode|rizon|spigot)
+		if [ ! -d $keyPath ] ; then
+			sudo mkdir -p $keyPath && sudo chown $keyUser:$keyUser $keyPath
+			if [ ! $? -eq 0 ]; then
+				echo "'$keyPath' does not exist and was not able to create it!"
+				exit 1
+			fi
+		fi
+
+		if [ ! -e $keyFile ] ; then
+			echo 2
+		else
+			echo "'$keyFile' already exists!"
+			exit 2
+		fi
+
+		if keyMake $1 ; then
+			echo 3
+		else
+			echo "Failed to create key!"
+			exit 3
+		fi
+
+		if sudo chown $keyUser:$keyUser $keyFile ; then
+			echo 4
+			echo $echoCmd`sudo openssl x509 -in $keyFile -outform der | sha1sum -b | cut -d' ' -f1`
+		else
+			echo "Failed to set weechat as owner of $keyFile!"
+			exit 4
+		fi
+	;;
+	*|-h|--help)
+		echo "Usage: $0 <freenode|rizon|spigot>"
+	;;
+esac
