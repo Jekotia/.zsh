@@ -8,7 +8,7 @@ echoCmd=""
 
 function keyMake () {
 	case $1 in
-		freenode|spigot) ## https://www.weechat.org/files/doc/stable/weechat_user.en.html#irc_connect_oftc_with_certfp
+		esper|freenode|spigot) ## https://www.weechat.org/files/doc/stable/weechat_user.en.html#irc_connect_oftc_with_certfp
 			sudo openssl req -x509 -new -newkey rsa:4096 -days 1000 -nodes -out $keyFile -keyout $keyFile -subj "$keySubj"
 			echoCmd="/msg NickServ CERT ADD "
 		;;
@@ -20,7 +20,7 @@ function keyMake () {
 }
 
 case $1 in
-	freenode|rizon|spigot)
+	esper|freenode|rizon|spigot)
 		if [ ! -d $keyPath ] ; then
 			sudo mkdir -p $keyPath && sudo chown $keyUser:$keyUser $keyPath
 			if [ ! $? -eq 0 ]; then
@@ -52,6 +52,6 @@ case $1 in
 		fi
 	;;
 	*|-h|--help)
-		echo "Usage: $0 <freenode|rizon|spigot>"
+		echo "Usage: $0 <esper|freenode|rizon|spigot>"
 	;;
 esac
