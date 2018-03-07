@@ -1,0 +1,12 @@
+#! /bin/bash
+if [[ "$1" == "" || "$1" == "-h" || "$1" == "--help" ]] ; then
+	echo "Tells you what package owns a file"
+	echo "usage: $0 <path-to-file>"
+elif rpm -v > /dev/null 2>&1 ; then
+	rpm -q --whatprovides $1
+elif dpkg -v > /dev/null 2>&1 ; then
+	dpkg-query -S $1
+else
+	echo "I could not find a package system I understand! Exiting."
+	exit 1
+fi
