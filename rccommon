@@ -85,7 +85,7 @@ bindkey '\e[F' end-of-line
 alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
 
-irccert='sudo su -l weechat -c "irccert $1"'
+#irccert='sudo su -l weechat -c "irccert $1"'
 
 # Some example alias instructions
 # If these are enabled they will be used instead of any instructions
