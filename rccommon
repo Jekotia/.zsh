@@ -1,6 +1,5 @@
 #! /bin/bash
 export TERM="xterm-256color"
-export GREP_OPTIONS='--color=always'
 
 ### https://github.com/mavnn/mintty-colors-solarized
 if [[ -e ~/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
@@ -89,6 +88,7 @@ bindkey '\e[F' end-of-line
 
 alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
+alias grep='grep --color=always'
 
 #irccert='sudo su -l weechat -c "irccert $1"'
 
