@@ -1,5 +1,6 @@
 #! /bin/bash
 export TERM="xterm-256color"
+export GREP_OPTIONS='--color=always'
 
 ### https://github.com/mavnn/mintty-colors-solarized
 if [[ -e ~/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
@@ -27,8 +28,8 @@ if [ -d "$HOME/bin/unix-tools" ] ; then
 fi
 
 # Set PATH so that it includes work-tools project bin
-if [ -d "$HOME/bin/work-tools" ] ; then
-        PATH="$HOME/bin/work-tools:${PATH}"
+if [ -d "$HOME/bin/work/unix-tools" ] ; then
+        PATH="$HOME/bin/work/unix-tools:${PATH}"
 fi
 
 # Set PATH so that it includes MY private bin
@@ -59,11 +60,15 @@ if [ -d ~/.zsh/completion ] ; then
 fi
 
 
-
-
 autoload -Uz compinit promptinit
 compinit -d ~/.zsh/compdump
 promptinit
+
+#autoload bashcompinit
+
+#if [ -e ~/.zsh/completion/bash/* ] ; then
+#	source ~/.zsh/completion/bash/*
+#fi
 
 # Keybinds
 # ctrl-left/right
