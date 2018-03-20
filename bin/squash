@@ -1,0 +1,179 @@
+#! /bin/bash
+
+mnt=/mnt/squash
+tmp=/tmp/squash
+tmpTab=$tmp/fstab
+# check for root/sudo
+if [[ ! `id -u` == "0" ]] ; then
+	echo "This must be run with root/sudo!"
+	exit 2
+fi
+
+fail=0
+# check if squashfs-tools is installed
+if ! which mksquashfs > /dev/null 2>&1 ; then
+	echo "Missing required package: squashfs-tools"
+	let "fail++"
+fi
+
+# check if kpartx is installed
+if ! which kpartx > /dev/null 2>&1 ; then
+	echo "Missing required package: kpartx"
+	let "fail++"
+fi
+
+if [ $fail -gt 0 ] ; then
+	exit 1
+fi
+
+# creates directories leading up to the output file, if they don't exist
+function ptouch() {
+  for p do
+    _dir="$(dirname -- "$p")"
+    mkdir -p -- "$_dir" #&&
+      #touch -- "$p"
+  done
+}
+
+
+function _mksquash () {
+	ptouch $destImg
+	if mksquashfs $mnt $destImg -comp lzo -e lib/modules etc/console-setup/cached_UTF-8_del.kmap.gz ; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+function _usage () {
+		echo "Usage:	$0 -i source.img dest.img"
+		echo "	$0 -d /dev/sdb2 dest.img"
+		echo "	$0 -c /dev/sdb2"
+}
+
+# copies fstab to /tmp/squash, when working with a device as the source
+function _fstab_backup () {
+	if ! cp -a $1 $tmpTab ; then
+		echo "Failed to backup $1/etc/fstab!"
+		return 1
+	else
+		echo $1 > $tmpTab.path
+		return 0
+	fi
+}
+
+
+function _fstab_restore () {
+	restorePath=`cat $tmpTab.path`
+	echo $restorePath
+
+	while true; do
+		read -p "I'm going to move $tmpTab to $restorePath. Does this look correct?" yn
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+
+	if ! mv $tmpTab $restorePath ; then
+		echo "Failed to restore $restorePath!"
+		return 1
+	else
+		rm -f $tmpTab.path
+		return 0
+	fi
+}
+
+if [ -e $tmpTab ] && [[ "$1" != "-c" ]] ; then
+	echo "WARNING: It appears this script did not finish last time it ran."
+	echo "	This script will not continue until $tmpTab has been removed."
+	echo "	If you use $0 -c, I will attempt to put $tmpTab back where I found it."
+	exit 5
+fi
+
+if ! mkdir -p $mnt ; then
+	echo "Could not create $mnt" ; exit 2
+fi
+
+if ! mkdir -p $tmp ; then
+	echo "Could not create $tmp" ; exit 3
+fi
+
+case $1 in
+# squash -i input.img output.img
+	-i|image|img)
+		srcImg=$2
+		destImg=$3
+		if [ ! -e $srcImg ] ; then
+			echo "$srcImg does not exist" ; exit 10
+		fi
+		if ! kpartx -av $srcImg | grep loop0p2 ; then
+			echo "Failed to find loop0p2 for initial mount" ; exit 11
+		fi
+		if ! mount /dev/mapper/loop0p2 $mnt ; then
+			echo "Failed to mount /dev/mapper/loop0p2" ; exit 12
+		fi
+		if ! sed -i 's/^\/dev\/mmcblk/#\0/g' $mnt/etc/fstab ; then
+			echo "Failed to update $mnt/etc/fstab" ; exit 13
+		fi
+		_mksquash
+		umount $mnt
+		kpartx -d $srcImg
+	;;
+# squash -d /mnt/input output.img
+	-d|dev|device)
+		srcDev=$2
+		destImg=$3
+		umount $srcDev > /dev/null 2>&1
+
+		if ! mount $srcDev $mnt ; then
+			echo "Could not mount $srcDev" ; exit 21
+		fi
+		if ! _fstab_backup $mnt/etc/fstab ; then
+			echo "Failed to backup $mnt/etc/fstab" ; exit 22
+		fi
+		if ! sed -i 's/^\/dev\/mmcblk/#\0/g' $mnt/etc/fstab ; then
+			echo "Failed to modify $mnt/etc/fstab"
+			_fstab_restore
+			exit 23
+		fi
+		if ! _mksquash ; then
+			_fstab_restore
+			exit 24
+		fi
+		_fstab_restore
+		umount $srcDev
+	;;
+# squash -p /mnt/input/fs/root output.img
+	-p|path)
+		srcPath=$2
+		destImg=$3
+
+		if ! _fstab_backup $srcPath/etc/fstab ; then
+			echo "Failed to backup $srcPath/etc/fstab" ; exit 30
+		fi
+
+		if ! sed -i 's/^\/dev\/mmcblk/#\0/g' $srcPath/etc/fstab ; then
+			echo "Failed to modify $srcPath/etc/fstab"
+			_fstab_restore
+			exit 31
+		fi
+		if ! _mksquash ; then
+			_fstab_restore
+			exit 32
+		fi
+		_fstab_restore
+	;;
+	-c)
+		_fstab_restore
+##		fstab=$1/etc/fstab
+##		if [ -e $fstab ] ; then
+##			mv $tmpTab $fstab
+##		fi
+	;;
+	*)
+		_usage
+		exit
+	;;
+esac
