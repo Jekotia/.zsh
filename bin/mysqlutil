@@ -1,0 +1,54 @@
+#! /bin/bash
+source ~/.zsh/binconf/mysqlutil
+
+function _create_database () {
+	read -p "Database name: " dbName
+	mysql -uroot -p$rootPass CREATE DATABASE $dbName IF NOT EXISTS;
+	mysql -uroot -p$rootPass FLUSH PRIVILEGES;
+}
+
+function _create_user () {
+	read -p "New user: " dbUser
+	newPassMatch=0
+	while [ $newPassMatch -lt 1 ]
+	do
+		read -sp "Password for $dbUser: " dbPass
+		echo
+		read -sp "Confirm password for $newUser: " dbPass2
+		echo
+		if [[ "$dbPass" == "$dbPass2" ]] ; then
+			newPassMatch=1
+		else
+			echo "Passwords do not match. Please try again."
+		fi
+	done
+	read -p "Host: " dbHost
+	echo
+	read -p "Database to access: " dbName
+	echo
+
+	mysql -uroot -p$rootPass GRANT ALL PRIVILEGES ON $dbName.* TO '$dbUser'@'dbHost' IDENTIFIED BY '$dbPass';
+ 	mysql -uroot -p$rootPass FLUSH PRIVILEGES;
+}
+
+case $1 in
+	-c|create)
+		echo create
+		shift
+		case $1 in
+			-d|db|database)
+				shift
+				echo db
+				_create_database
+			;;
+			-u|user)
+				shift
+				echo user
+				_create_user
+			;;
+		esac
+	;;
+	*)
+		echo usage
+	;;
+esac
