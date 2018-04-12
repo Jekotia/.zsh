@@ -3,7 +3,7 @@ source ~/.zsh/binconf/mysqlutil
 
 function _create_database () {
 	read -p "Database name: " dbName
-	mysql -uroot -p$rootPass -e "CREATE DATABASE $dbName IF NOT EXISTS;"
+	mysql -uroot -p$rootPass -e "CREATE DATABASE IF NOT EXISTS $dbName;"
 	mysql -uroot -p$rootPass -e "FLUSH PRIVILEGES;"
 }
 
