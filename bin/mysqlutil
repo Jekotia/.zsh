@@ -3,8 +3,8 @@ source ~/.zsh/binconf/mysqlutil
 
 function _create_database () {
 	read -p "Database name: " dbName
-	mysql -uroot -p$rootPass CREATE DATABASE $dbName IF NOT EXISTS;
-	mysql -uroot -p$rootPass FLUSH PRIVILEGES;
+	mysql -uroot -p$rootPass -e "CREATE DATABASE $dbName IF NOT EXISTS;"
+	mysql -uroot -p$rootPass -e "FLUSH PRIVILEGES;"
 }
 
 function _create_user () {
@@ -27,8 +27,8 @@ function _create_user () {
 	read -p "Database to access: " dbName
 	echo
 
-	mysql -uroot -p$rootPass GRANT ALL PRIVILEGES ON $dbName.* TO '$dbUser'@'dbHost' IDENTIFIED BY '$dbPass';
- 	mysql -uroot -p$rootPass FLUSH PRIVILEGES;
+	mysql -uroot -p$rootPass -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$dbUser'@'dbHost' IDENTIFIED BY '$dbPass';"
+ 	mysql -uroot -p$rootPass -e "FLUSH PRIVILEGES;"
 }
 
 case $1 in
