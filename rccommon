@@ -32,7 +32,7 @@ if [ -d "$HOME/bin/work/unix-tools" ] ; then
 fi
 
 # Set PATH so that it includes MY private bin
-if [ -d "$HOME/.zsh/bin" ] ; then 
+if [ -d "$HOME/.zsh/bin" ] ; then
 	PATH="$HOME/.zsh/bin:${PATH}"
 fi
 
@@ -51,7 +51,9 @@ if [[ -e ~/.nanorc ]] ; then
 	fi
 else
 	touch ~/.nanorc
-	echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
+	if [[ -e /usr/share/nano/sh.nanorc ]] ; then
+		echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
+	fi
 fi
 
 
