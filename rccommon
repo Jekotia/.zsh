@@ -88,7 +88,7 @@ bindkey '\e[F' end-of-line
 
 alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
-alias grep='grep --color=always'
+#alias grep='grep --color=always'
 
 #irccert='sudo su -l weechat -c "irccert $1"'
 
