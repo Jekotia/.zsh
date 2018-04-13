@@ -44,7 +44,7 @@ export HISTSIZE=1000
 
 # Make sure nano highlighting is turned on
 if [[ -e ~/.nanorc ]] ; then
-	if ! cat .nanorc | grep "include /usr/share/nano/sh.nanorc" > /dev/null ; then
+	if ! cat ~/.nanorc | grep "include /usr/share/nano/sh.nanorc" > /dev/null ; then
 		if [[ -e /usr/share/nano/sh.nanorc ]] ; then
 			echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
 		fi
