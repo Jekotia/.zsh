@@ -1,0 +1,12 @@
+#! /bin/bash
+if [[ "$1" == "" ]] ; then
+	echo "Usage: $0 [url]"
+	exit
+fi
+
+url=$1
+filename=$(basename "$url")
+wget $url
+unzip $filename
+rm -i $filename
+
