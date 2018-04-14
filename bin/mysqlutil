@@ -14,7 +14,7 @@ function _create_user () {
 	do
 		read -sp "Password for $dbUser: " dbPass
 		echo
-		read -sp "Confirm password for $newUser: " dbPass2
+		read -sp "Confirm password for $dbUser: " dbPass2
 		echo
 		if [[ "$dbPass" == "$dbPass2" ]] ; then
 			newPassMatch=1
@@ -27,8 +27,36 @@ function _create_user () {
 	read -p "Database to access: " dbName
 	echo
 
-	mysql -uroot -p$rootPass -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$dbUser'@'dbHost' IDENTIFIED BY '$dbPass';"
+	mysql -uroot -p$rootPass -e "GRANT ALL PRIVILEGES ON $dbName.* TO '$dbUser'@'$dbHost' IDENTIFIED BY '$dbPass';"
  	mysql -uroot -p$rootPass -e "FLUSH PRIVILEGES;"
+}
+
+function _drop_database () {
+	mysql -uroot -p$rootPass -e "SHOW databases;"
+	echo
+	read -p " : " dbName
+	echo
+	read -p "About to remove $dbName Continue? y/n: " cont
+	if [[ "$cont" == "y" ]] ; then
+		mysql -uroot -p$rootPass -e "DROP DATABASE $dbName;"
+	else
+		exit
+	fi
+}
+
+function _drop_user () {
+	mysql -uroot -p$rootPass -e "SELECT User, Host, Password FROM mysql.user;"
+	echo
+	read -p "User: " dbUser
+	echo
+	read -p "Host: " dbHost
+	echo
+	read -p "About to remove '$dbUser'@'$dbHost'. Continue? y/n: " cont
+	if [[ "$cont" == "y" ]] ; then
+		mysql -uroot -p$rootPass -e "DROP USER '$dbUser'@'$dbHost';"
+	else
+		exit
+	fi
 }
 
 case $1 in
@@ -45,6 +73,22 @@ case $1 in
 				shift
 				echo user
 				_create_user
+			;;
+		esac
+	;;
+	-d|drop)
+		echo drop
+		shift
+		case $1 in
+			-d|db|database)
+				shift
+				echo db
+				_drop_database
+			;;
+			-u|user)
+				shift
+				echo user
+				_drop_user
 			;;
 		esac
 	;;
