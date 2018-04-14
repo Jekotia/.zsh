@@ -17,3 +17,7 @@ if [[ -e /var/www/html/owncloud/occ ]] ; then
 fi
 alias apt-search="dpkg-query -L"
 alias composer="sudo -uapache composer"
+
+if [ -e /etc/motd ] ; then
+	cat /etc/motd
+fi
