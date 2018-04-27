@@ -2,13 +2,13 @@
 export TERM="xterm-256color"
 
 ### https://github.com/mavnn/mintty-colors-solarized
-if [[ -e ~/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
-	source ~/.zsh/extras/mintty-colors-solarized/sol.dark
+if [[ -e ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
+	source ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark
 fi
 
 ### https://github.com/seebi/dircolors-solarized
-if [[ -e ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
-	eval `dircolors ~/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
+if [[ -e ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
+	eval `dircolors ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
 fi
 
 # Set PATH so it includes /usr/local/sbin if it exists
@@ -17,60 +17,54 @@ if [ -d "/usr/local/sbin" ] ; then
 fi
 
 # Set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
- PATH="$HOME/bin:${PATH}"
+if [ -d "${HOME}/bin" ] ; then
+ PATH="${HOME}/bin:${PATH}"
 fi
 
 # Set PATH so that it includes unix-tools project bin
-if [ -d "$HOME/bin/unix-tools" ] ; then
-        PATH="$HOME/bin/unix-tools:${PATH}"
+if [ -d "${HOME}/bin/unix-tools" ] ; then
+        PATH="${HOME}/bin/unix-tools:${PATH}"
 fi
 
 # Set PATH so that it includes work-tools project bin
-if [ -d "$HOME/bin/work/unix-tools" ] ; then
-        PATH="$HOME/bin/work/unix-tools:${PATH}"
+if [ -d "${HOME}/bin/work/unix-tools" ] ; then
+        PATH="${HOME}/bin/work/unix-tools:${PATH}"
 fi
 
 # Set PATH so that it includes MY private bin
-if [ -d "$HOME/.zsh/bin" ] ; then
-	PATH="$HOME/.zsh/bin:${PATH}"
+if [ -d "${HOME}/.zsh/bin" ] ; then
+	PATH="${HOME}/.zsh/bin:${PATH}"
 fi
 
-export HISTFILE=~/.zsh/history
+export HISTFILE=${HOME}/.zsh/history
 setopt INC_APPEND_HISTORY
 export SAVEHIST=3000
 setopt HIST_EXPIRE_DUPS_FIRST
 export HISTSIZE=1000
 
 # Make sure nano highlighting is turned on
-if [[ -e ~/.nanorc ]] ; then
-	if ! cat ~/.nanorc | grep "include /usr/share/nano/sh.nanorc" > /dev/null ; then
-		if [[ -e /usr/share/nano/sh.nanorc ]] ; then
-			echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
-		fi
-	fi
-else
-	touch ~/.nanorc
-	if [[ -e /usr/share/nano/sh.nanorc ]] ; then
-		echo include /usr/share/nano/sh.nanorc >> ~/.nanorc
-	fi
+
+if [[ ! -e ${HOME}/.nanorc ]] ; then
+	touch ${HOME}/.nanorc
 fi
 
+if ! cat ${HOME}/.nanorc | grep "include ~/.zsh/extras/nanorc/\*.nanorc" > /dev/null ; then
+	echo "include ~/.zsh/extras/nanorc/*.nanorc" >> ${HOME}/.nanorc
+fi
 
 # Completions
-if [ -d ~/.zsh/completion ] ; then
-	fpath=(~/.zsh/completion $fpath)
+if [ -d ${HOME}/.zsh/completion ] ; then
+	fpath=(${HOME}/.zsh/completion $fpath)
 fi
 
-
 autoload -Uz compinit promptinit
-compinit -d ~/.zsh/compdump
+compinit -d ${HOME}/.zsh/compdump
 promptinit
 
 #autoload bashcompinit
 
-#if [ -e ~/.zsh/completion/bash/* ] ; then
-#	source ~/.zsh/completion/bash/*
+#if [ -e ${HOME}/.zsh/completion/bash/* ] ; then
+#	source ${HOME}/.zsh/completion/bash/*
 #fi
 
 # Keybinds
