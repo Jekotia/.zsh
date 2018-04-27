@@ -25,7 +25,7 @@ fi
 $pkgMgr -y install wget curl nano zsh git bc
 
 if [[ ! "$2" == "--local" ]] ; then
-	cd $HOME
+	cd $origHome
 	echo --- Cloning \'.zsh\' from origin
 	sudo -u $origUser git clone https://git.jekotia.net/jekotia/.zsh.git
 	chown -R $origUser:$origUser $origHome/.zsh
