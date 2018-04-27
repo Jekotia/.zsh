@@ -4,7 +4,7 @@ if [ -e ~/.zsh/rccommon ] ; then
 	source ~/.zsh/rccommon
 fi
 
-if [[ "$USERNAME" == "root" || "$USERNAME" == "pi" || "$USERNAME" == "minecraft" || "$USERNAME" == "ysl" ]] ; then
+if [[ "$USERNAME" == "root" || "$USERNAME" == "pi" || "$USERNAME" == "minecraft" || "$USERNAME" == "ysl" ]] || cat /etc/os-release 2>&1 | grep debian /dev/null ; then
 	if [ -e ~/.zsh/rcroot ] ; then
 		source ~/.zsh/rcroot
 	fi
