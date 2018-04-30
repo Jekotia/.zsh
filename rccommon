@@ -48,8 +48,12 @@ if [[ ! -e ${HOME}/.nanorc ]] ; then
 	touch ${HOME}/.nanorc
 fi
 
-if ! cat ${HOME}/.nanorc | grep "include ~/.zsh/extras/nanorc/\*.nanorc" > /dev/null ; then
-	echo "include ~/.zsh/extras/nanorc/*.nanorc" >> ${HOME}/.nanorc
+#if ! cat ${HOME}/.nanorc | grep "include ~/.zsh/extras/nanorc/\*.nanorc" > /dev/null ; then
+#	echo "include ~/.zsh/extras/nanorc/*.nanorc" >> ${HOME}/.nanorc
+#fi
+
+if ! grep -f ~/.zsh/extras/nanorc/nanorc ~/.nanorc ; then
+	cat ~/.zsh/extras/nanorc/nanorc >> ~/.nanorc
 fi
 
 # Completions
