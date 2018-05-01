@@ -1,0 +1,44 @@
+#! /bin/bash
+## This script is for easily testing regex replacment in sed
+## Ref: echo "Listen 80" > hello.txt && sed -i -e 's/Listen\s80/Listen 1080/g' test.txt && cat test.txt
+tmp=/tmp/sed-test
+sample="$1"
+subout="$2"
+exp="$3"
+
+function _main () {
+	touch $tmp
+
+	echo "$sample" > $tmp
+	echo "Contents of test file:"
+	cat $tmp
+
+	sed -i -e "s/$exp/$subout/g" $tmp
+	echo
+	echo "New contents of test file:"
+	cat $tmp
+
+	rm -f $tmp
+
+	return 0
+}
+
+function _usage () {
+	echo "This script is for testing regex replacement in sed"
+	echo "It takes three arguments in fixed order:"
+	echo "  sample - the text to attempt the replacement on"
+	echo "  subout - the desired text to be substituted"
+	echo "  expression - the regex to be tested"
+	echo
+	echo "Example: sed-test \"Listen 80\" \"Listen 1080\" 's/Listen\s80/Listen 1080/g'"
+}
+
+if [[ "$1" != "" ]] ; then
+	if [[ "$2" != "" ]] ; then
+		if [[ "$3" != "" ]] ; then
+			_main && exit 0
+		fi
+	fi
+fi
+
+_usage
