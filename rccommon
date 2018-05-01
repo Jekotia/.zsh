@@ -52,7 +52,7 @@ fi
 #	echo "include ~/.zsh/extras/nanorc/*.nanorc" >> ${HOME}/.nanorc
 #fi
 
-if ! grep -f ~/.zsh/extras/nanorc/nanorc ~/.nanorc ; then
+if ! grep -f ~/.zsh/extras/nanorc/nanorc ~/.nanorc > /dev/null ; then
 	cat ~/.zsh/extras/nanorc/nanorc >> ~/.nanorc
 fi
 
