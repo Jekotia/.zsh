@@ -924,6 +924,7 @@ prompt_ip() {
 
       ip=$(getRelevantItem "$interfaces" "$callback")
     fi
+    ip=$(sed -n 1p <<< "$ip")
   fi
 
   "$1_prompt_segment" "$0" "$2" "cyan" "$DEFAULT_COLOR" "$ip" 'NETWORK_ICON'
