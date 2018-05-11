@@ -65,7 +65,7 @@ if [[ ! -e ${HOME}/.gitconfig ]] ; then
 	touch ${HOME}/.gitconfig
 fi
 
-if ! grep -f ~/.zsh/ref/gitconfig ~/.gitconfig ; then #> /dev/null ; then
+if ! grep -f ~/.zsh/ref/gitconfig ~/.gitconfig > /dev/null ; then
 	echo "Adding contents of '~/.zsh/ref/gitconfig' to '~/.gitconfig'"
 	cat ~/.zsh/ref/gitconfig >> ~/.gitconfig
 fi
