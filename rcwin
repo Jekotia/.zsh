@@ -38,7 +38,7 @@ fi
 # startup of the ssh-agent
 AGENT_PID=$(pgrep -x ssh-agent)
 #if [ $? -ne 0 ]; then
-	#echo "---- INFO: ~/.zsh/rclocal: Starting SSH Agent!"
+	#echo "---- INFO: ~/.zsh/rcwin: Starting SSH Agent!"
 
 	eval `ssh-agent -s` > /dev/null
 	trap 'kill $SSH_AGENT_PID' EXIT
@@ -47,9 +47,9 @@ AGENT_PID=$(pgrep -x ssh-agent)
 	set SSH_AUTH_SOCK $SSH_AUTH_SOCK
 	set SSH_AGENT_PID $SSH_AGENT_PID
 
-	#echo "---- INFO: ~/.zsh/rclocal: SSH Agent running (PID: $SSH_AGENT_PID)"
+	#echo "---- INFO: ~/.zsh/rcwin: SSH Agent running (PID: $SSH_AGENT_PID)"
 #else
-	#echo "---- INFO: ~/.zsh/rclocal: SSH Agent already running (PID: $AGENT_PID)"
+	#echo "---- INFO: ~/.zsh/rcwin: SSH Agent already running (PID: $AGENT_PID)"
 #fi
 
 

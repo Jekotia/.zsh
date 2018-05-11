@@ -4,13 +4,13 @@ if [ -e ~/.zsh/rccommon ] ; then
 	source ~/.zsh/rccommon
 fi
 
-if [[ "$USERNAME" == "root" || "$USERNAME" == "pi" || "$USERNAME" == "minecraft" || "$USERNAME" == "ysl" ]] || cat /etc/os-release 2>&1 | grep debian > /dev/null ; then
-	if [ -e ~/.zsh/rcroot ] ; then
-		source ~/.zsh/rcroot
+if uname | grep "CYGWIN" > /dev/null 2>&1 ; then
+	if [ -e ~/.zsh/rcwin ] ; then
+		source ~/.zsh/rcwin
 	fi
 else
-	if [ -e ~/.zsh/rclocal ] ; then
-		source ~/.zsh/rclocal
+	if [ -e ~/.zsh/rclinux ] ; then
+		source ~/.zsh/rclinux
 	fi
 fi
 
