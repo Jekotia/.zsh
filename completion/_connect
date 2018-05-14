@@ -16,11 +16,11 @@ _connect() {
 
 	case $state in
 		mode)
-			_arguments '1: :(ssh sftp tools)'
+			_arguments '1: :(ssh sftp copy-id tools)'
 		;;
 		*)
 			case $words[2] in
-				ssh|sftp)
+				ssh|sftp|copy-id)
 					_arguments '2:Hosts:(`$scrpath args 21`)'
 				;;
 				tools)
