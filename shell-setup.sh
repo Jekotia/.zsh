@@ -1,5 +1,6 @@
 #! /bin/bash
 
+zshSource="https://git.jekotia.net/jekotia/.zsh.git"
 #origUser=`who am i | awk '{print $1}'`
 origUser="$1"
 echo "origUser = $origUser"
@@ -27,7 +28,7 @@ $pkgMgr -y install wget curl nano zsh git bc
 if [[ ! "$2" == "--local" ]] ; then
 	cd $origHome
 	echo --- Cloning \'.zsh\' from origin
-	sudo -u $origUser git clone https://git.jekotia.net/jekotia/.zsh.git
+	sudo -u $origUser git clone ${zshSource}
 	chown -R $origUser:$origUser $origHome/.zsh
 fi
 
