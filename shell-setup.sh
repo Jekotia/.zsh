@@ -1,6 +1,7 @@
 #! /bin/bash
 
-zshSource="https://git.jekotia.net/jekotia/.zsh.git"
+#zshSource="https://git.jekotia.net/jekotia/.zsh.git"
+zshSource="https://github.com/Jekotia/.zsh.git"
 #origUser=`who am i | awk '{print $1}'`
 origUser="$1"
 echo "origUser = $origUser"
