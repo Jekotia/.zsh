@@ -30,6 +30,9 @@ fi
 if [ -d "${HOME}/bin/work/unix-tools" ] ; then
 	PATH="${HOME}/bin/work/unix-tools:${PATH}"
 fi
+if [ -d "${HOME}/bin/work" ] ; then
+	PATH="${HOME}/bin/work:${PATH}"
+fi
 
 # Set PATH so that it includes MY private bin
 if [ -d "${HOME}/.zsh/bin" ] ; then
