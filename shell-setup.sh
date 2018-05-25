@@ -28,8 +28,9 @@ $pkgMgr -y install wget curl nano zsh git bc
 if [[ ! "$2" == "--local" ]] ; then
 	cd $origHome
 	echo --- Cloning \'.zsh\' from origin
-	sudo -u $origUser git clone ${zshSource}
-	chown -R $origUser:$origUser $origHome/.zsh
+	sudo -u $origUser git clone ${zshSource} \
+	&& chown -R $origUser:$origUser $origHome/.zsh
+	if ! $? ; then exit 1 ; fi
 fi
 
 if ( grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zshenv" || grep -Fxq "ZDOTDIR=\"\${ZDOTDIR:-\$HOME/.zsh}\"" "/etc/zsh/zshenv" ) ; then
