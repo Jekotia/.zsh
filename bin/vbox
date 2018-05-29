@@ -1,0 +1,64 @@
+#! /bin/bash
+
+source ~/.zsh/binconf/vbox.conf
+
+#VBoxManage='/cygdrive/c/Program Files/Oracle/VirtualBox/VBoxManage.exe'
+
+case $1 in
+	headless)
+		if [[ "$2" == "" ]] ; then
+			echo "Modifies Virtual Box machines to default to headless, using the official tools located in /cygdrive/c/Program Files/Oracle/VirtualBox"
+			exit
+		else
+			"$VBoxManage" modifyvm "$2" --defaultfrontend headless
+		fi
+	;;
+	start)
+		"$VBoxManage" startvm "$2" --type headless
+	;;
+	pause)
+		"$VBoxManage" controlvm $2 pause
+	;;
+	resume)
+		"$VBoxManage" controlvm $2 resume
+	;;
+	stop)
+		"$VBoxManage" controlvm $2 acpipowerbutton
+	;;
+	kill)
+		"$VBoxManage" controlvm $2 poweroff
+	;;
+	save)
+		"$VBoxManage" controlvm $2 savestate
+	;;
+	list)
+		vmlist=""
+
+		IFS='
+		'
+
+		for l in $("$VBoxManage" list vms) ; do
+			vmlist="$vmlist `echo $l | cut -d '\"' -f2`"
+		done
+
+		echo $vmlist
+	;;
+	args)
+		shift
+		case $1 in
+			main)
+				echo "headless start pause resume stop kill save list"
+			;;
+		esac
+	;;
+	*)
+		echo "Usage:	$0 headless <vm name>"
+		echo "	$0 start <vm name>"
+		echo "	$0 pause <vm name>"
+		echo "	$0 resume <vm name>"
+		echo "	$0 stop <vm name>"
+		echo "	$0 kill <vm name>"
+		echo "	$0 save <vm name>"
+		echo "	$0 list"
+	;;
+esac

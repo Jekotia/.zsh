@@ -1,0 +1,33 @@
+#compdef vbox
+
+# https://askql.wordpress.com/2011/01/11/zsh-writing-own-completion/
+
+#_arguments "1: :(`~/bin/vbox args 01`)"
+#_arguments "2: :(`~/bin/vbox args 21`)"
+
+srcpath="$HOME/.zsh/bin/vbox"
+args_main=`$srcpath args main`
+#vmlist=`$srcpath list`
+
+_vbox() {
+	local curcontext="$curcontext" state line
+	typeset -A opt_args
+
+	_arguments '1: :->mode'
+
+	case $state in
+		mode)
+			_arguments '1: :(`echo $args_main`)'
+		;;
+		*)
+			case $words[2] in
+				start|stop|save|pause|resume|kill|headless)
+					_arguments '2:Hosts:(`$srcpath list`)'
+#					_arguments '2:Hosts:(`echo $vmlist`)'
+				;;
+			esac
+		;;
+	esac
+}
+
+_vbox "$@"
