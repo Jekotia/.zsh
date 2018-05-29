@@ -1,5 +1,5 @@
 #! /bin/bash
-source ~/.zsh/binconf/mysqlutil
+source ~/.zsh/binconf/mysqlutil.conf
 
 function _create_database () {
 	read -p "Database name: " dbName
