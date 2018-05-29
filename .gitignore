@@ -1,4 +1,4 @@
 .zcompdump*
 compdump
 history*
-binconf
+binconf/*.conf
