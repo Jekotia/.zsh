@@ -1,3 +1,3 @@
 #! /bin/bash
 
-curl -L http://saturn.jekotia.net:3000/jekotia/.zsh/raw/master/shell-setup.sh | bash
+curl -L https://raw.githubusercontent.com/Jekotia/.zsh/master/shell-setup.sh | bash
