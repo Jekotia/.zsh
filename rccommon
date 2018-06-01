@@ -73,6 +73,11 @@ if ! grep -f ~/.zsh/ref/gitconfig ~/.gitconfig > /dev/null ; then
 	cat ~/.zsh/ref/gitconfig >> ~/.gitconfig
 fi
 
+# Functions
+
+if [ -d ~/.zsh/functions ] ; then
+	for f in ~/.zsh/functions/* ; do source $f; done
+fi
 
 # Completions
 if [ -d ${HOME}/.zsh/completion ] ; then
