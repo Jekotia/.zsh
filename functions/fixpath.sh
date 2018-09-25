@@ -53,7 +53,7 @@ function _fixpath () {
 		#var="/cygdrive/c/adb" ; echo $PATH | grep "$var" > /dev/null 2&>1 || PATH="$PATH:$var"
 		#var="/cygdrive/c/HashiCorp/Vagrant/bin" ; echo $PATH | grep "$var" > /dev/null 2&>1 || PATH="$PATH:$var"
 
-		if ! echo $PATH | grep "${i}" > /dev/null 2&>1 ; then
+		if ! echo $PATH | grep "${i}" > /dev/null 2>&1 ; then
 			PATH="$PATH:${i}"
 		fi
 	done
