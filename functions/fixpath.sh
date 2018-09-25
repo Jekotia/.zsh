@@ -7,7 +7,7 @@ function _fixpath () {
 	declare -a replaceList=("derpingtoday"
 	"/cygdrive/c/perl/bin"
 	"/cygdrive/c/perl/site/bin"
-	"/cygdrive/c/ProgramData/chocolatey/bin"
+#	"/cygdrive/c/ProgramData/chocolatey/bin"
 	"/cygdrive/c/Program\ Files/ConEmu"
 	"/cygdrive/c/Program\ Files/ConEmu/ConEmu"
 	"/cygdrive/c/Program\ Files/ConEmu/ConEmu/Scripts"
