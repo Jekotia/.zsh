@@ -123,6 +123,8 @@ alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
 alias diff="git diff --no-index --color-words"
 
+alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
+
 #alias grep='grep --color=always'
 
 #irccert='sudo su -l weechat -c "irccert $1"'
