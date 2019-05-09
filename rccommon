@@ -125,6 +125,9 @@ if hub --version > /dev/null 2>&1 ; then
 	eval "$(hub alias -s)"
 fi
 
+
+alias nano='nano --linenumbers --wordbounds --softwrap --constantshow'
+
 alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
 alias diff="git diff --no-index --color-words"
