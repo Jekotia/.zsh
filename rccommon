@@ -48,6 +48,12 @@ if [ -d "${HOME}/Dockerfiles/bin" ] ; then
 	PATH="${HOME}/Dockerfiles/bin:${PATH}"
 fi
 
+# Set PATH so that it includes go programs installed to ~/go/bin, if present
+if [ -d "~/go/bin" ] ; then
+ PATH="~/go/bin:${PATH}"
+fi
+
+
 export HISTFILE=${HOME}/.zsh/history
 setopt INC_APPEND_HISTORY
 export SAVEHIST=3000
