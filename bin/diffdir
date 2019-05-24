@@ -1,0 +1,44 @@
+#! /bin/bash
+
+#-> TAKES TWO DIRECTORIES AND LISTS WHICH FILES ARE DIFFERENT BETWEEN THEM
+#-> TAKES TWO STRINGS AS ARGS
+
+#-> CHECK IF THERE ARE NO ARGS, AND SHOW HELP IF SO
+if [[ -z "${@+x}" ]] ; then
+	cat << EndOfMessage
+Recursively compare the contents of two directories and list the files which are different.
+Usage example:
+	$0 /etc/httpd /etc/httpd.bak
+EndOfMessage
+	exit 1
+fi
+
+#-> CHECK FOR FIRST ARG
+if [[ ! -z "${1+x}" ]] ; then
+	if [ -d "${1}" ]; then
+		DIR1="${1}"
+		shift
+	else
+		echo "${1} is not a valid directory."
+		exit 1
+	fi
+else
+	echo "Missing directory arguments"
+fi
+
+#-> CHECK FOR SECOND ARG
+if [[ ! -z "${1+x}" ]] ; then
+	if [ -d "${1}" ]; then
+		DIR2="${1}"
+		shift
+	else
+		echo "${1} is not a valid directory."
+		exit 1
+	fi
+else
+	echo "Missing second directory argument"
+fi
+
+diff -r ${DIR1} ${DIR2} | grep ${DIR1} | awk '{print $4}'
+
+exit $?
