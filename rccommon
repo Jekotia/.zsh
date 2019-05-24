@@ -125,8 +125,21 @@ if hub --version > /dev/null 2>&1 ; then
 	eval "$(hub alias -s)"
 fi
 
+#alias nano='nano--tabsize=4 --linenumbers --wordbounds --softwrap --constantshow'
+nanohelp=$(nano --help)
+nanolist=("--linenumbers" "--wordbounds" "--softwrap" "--constantshow")
+for i in "${nanolist[@]}" ; do
+	echo "$nanohelp" | grep --silent "\\$i"
+	if [ $? -eq 0 ] ; then
+		nanoargs="${nanoargs} ${i}"
+	fi
+done
+echo "$nanohelp" | grep --silent "\--tabsize"
+if [ $? -eq 0 ] ; then
+	nanoargs="${nanoargs} --tabsize=4"
+fi
+alias nano="nano ${nanoargs}"
 
-alias nano='nano --linenumbers --wordbounds --softwrap --constantshow'
 
 alias rm='rm -i'
 alias ls='ls -F --group-directories-first --color=tty'
@@ -140,8 +153,8 @@ alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 # Some example alias instructions
 # If these are enabled they will be used instead of any instructions
-# they may mask.  For example, alias rm='rm -i' will mask the rm
-# application.  To override the alias instruction use a \ before, ie
+# they may mask. For example, alias rm='rm -i' will mask the rm
+# application. To override the alias instruction use a \ before, ie
 # \rm will call the real rm not the alias.
 #
 # Interactive operation...
