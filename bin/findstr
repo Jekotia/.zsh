@@ -1,0 +1,40 @@
+#! /bin/bash
+
+#-> SEARCH FOR STRING WITHIN FILES LOCATED IN THE CURRENT DIRECTORY, OR OPTIONALLY A SPECIFIED DIRECTORY
+#-> TAKES TWO STRINGS AS ARGS, IN STRICT ORDER
+#->   - OPTIONAL: PATH TO SEARCH UNDER
+#->   - REQUIRED: STRING TO SEARCH FOR
+#-> RETURNS ERROR CODE OF GREP, WHICH SHOULD BE 0 FOR FOUND STRING AND 1 FOR STRING NOT FOUND
+
+#-> CHECK IF THERE ARE NO ARGS, AND SHOW HELP IF SO
+if [[ -z "${@+x}" ]] ; then
+	cat << EndOfMessage
+Search within the files of a given directory for a given string, or the current directory if no directory is given.
+Usage examples:
+	$0 mystring
+	$0 /var/log mystring
+	$0 "my string with spaces"
+EndOfMessage
+	exit 1
+fi
+
+#-> CHECK IF THERE'S TWO (IMPLIED: OR MORE) ARGS
+if [[ ! -z "${2+x}" ]] ; then
+	#-> IF THERE IS, CHECK IF THE FIRST ARG EXISTS AS A DIRECTORY
+	if [ -d "${1}" ]; then
+		DIR="${1}"
+		shift
+		echo ${DIR}
+	else
+		echo "Invalid directory specified."
+		exit 1
+	fi
+else
+	DIR=.
+fi
+
+STR=${@}
+
+find ${DIR} -type f -print0 | xargs -0 grep "${STR}"
+
+exit $?
