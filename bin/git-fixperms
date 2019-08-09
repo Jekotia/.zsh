@@ -1,0 +1,160 @@
+#! /bin/bash
+
+# Source /functions/init ; modify the path to libbash to suit your environment.
+source "${HOME}/github/libbash/functions/init"
+# Invoke the init. JLB_ROOT will have been set when the init was sourced.
+jlb::init "${JLB_ROOT}"
+
+# The version of the function file in format "x.y.z".
+export JLB_SKELETON_VERSION=1.0.0
+
+# Public: BRIEF summary of function
+#
+# May or may not make a skeleton rattle
+#
+# $1 - Argument 1.
+# $2 - Argument 2. etc
+#
+# Examples
+#
+#   jlb::skeleton "rattle"
+#   jlb::skeleton "silent"
+#   jlb::skeleton "random"
+#
+# Returns 1 if the skeleton remained silent, 0 if it rattled.
+function git_fixperms::repo_loop() {
+	jlb::funcStart ; local errcode=
+
+	local 	Task \
+			File \
+			OldMode \
+			NewMode \
+			Path="$1" ; shift
+
+	Task="Diff"
+	printf "%-3s %-3s %-60s\n" "OLD" "NEW" "TARGET"
+	git diff | while read line ; do
+		#	$Task values
+		#		Diff	= search for diff line and extract file name
+		#		OldMode	= extract old mode
+		#		NewMode	= extract new mode
+		if [[ "$Task" == "Diff" ]] ; then
+			jlb::debug "Task: Diff"
+			if echo $line | grep -e "diff --git a/*" > /dev/null ; then
+				File=$(echo $line | sed -nr '/diff\s\-\-git\sa\// s/diff\s\-\-git\sa\/([^"]+)b\/.*/\1/p')
+				Task="OldMode"
+			fi
+
+		elif [[ "$Task" == "OldMode" ]] ; then
+			jlb::debug "Task: OldMode"
+			if echo $line | grep -P "old\smode\s\d" > /dev/null ; then
+				OldMode=$(echo $line | sed -nr '/old\smode\s/ s/old\smode\s[0-9]{3}([^"]+)/\1/p')
+				jlb::debug "OldMode: $OldMode"
+				Task="NewMode"
+			else
+				Task="Diff"
+			fi
+
+		elif [[ "$Task" == "NewMode" ]] ; then
+			jlb::debug "Task: NewMode"
+			if echo $line | grep -P "new\smode\s\d" > /dev/null ; then
+				NewMode=$(echo $line | sed -nr '/new\smode\s/ s/new\smode\s[0-9]{3}([^"]+)/\1/p')
+				jlb::debug "NewMode: $NewMode"
+
+				printf "%-3s %-3s %-60s\n" $OldMode $NewMode $File
+
+				echo "chmod $OldMode $File" >> "$Path/fixperms.txt"
+			fi
+			Task="Diff"
+		fi
+	done
+
+	jlb::funcEnd "${errcode}" ; return $errcode
+}
+
+# The version of the function file in format "x.y.z".
+export JLB_SKELETON_VERSION=1.0.0
+
+# Public: BRIEF summary of function
+#
+# May or may not make a skeleton rattle
+#
+# $1 - Argument 1.
+# $2 - Argument 2. etc
+#
+# Examples
+#
+#   jlb::skeleton "rattle"
+#   jlb::skeleton "silent"
+#   jlb::skeleton "random"
+#
+# Returns 1 if the skeleton remained silent, 0 if it rattled.
+function git_fixperms::main_loop() {
+	jlb::funcStart ; local errcode=
+	local	MatchStr \
+			Path \
+			TargetPath \
+			WorkPath
+
+	for PassedDir in "$@" ; do
+		printf "%-7s \n" "Match"
+		printf "%-7s %-60s\n" "String" "Path"
+		MatchStr=""
+		Path=""
+		TargetPath=""
+		WorkPath=""
+
+		# /usr/bin
+		if [[ $PassedDir == /* ]] ; then
+			MatchStr="/*"
+			WorkPath=$PassedDir
+			Path=$WorkPath
+		else
+			# "../packages"
+			# "../archive/"
+			if [[ $PassedDir == ../* ]] ; then
+				MatchStr="../*"
+				TargetPath=$( basename ${PassedDir} )
+				Path=$( echo ${PassedDir} | sed "s/$TargetPath//" )
+				Path=$( cd $Path && pwd && cd - > /dev/null 2>&1 )
+
+			# "./less"
+			elif [[ $PassedDir == ./* ]] ; then
+				MatchStr="./*"
+				Path=$(pwd)
+				TargetPath="$(echo -e "${PassedDir}" | sed -e 's/^.\///')"
+
+			# ".git"
+			elif [[ $PassedDir == .* ]] ; then
+				MatchStr=".*"
+				Path=$(pwd)
+				TargetPath=${PassedDir}		
+			else
+				jlb::printerr "OOPS!"
+				exit
+			fi
+
+			WorkPath="$Path/$TargetPath"
+		fi
+
+		set -o noglob
+		printf "%-7s %s" $MatchStr $Path
+		set +o noglob
+		printf "\e[1;31m/"
+		printf "\e[0m"
+		printf "%s \n" $TargetPath
+
+		cd "$WorkPath"
+		if [ -d .git ]; then
+			git_fixperms::repo_loop "${WorkPath}"
+		else
+			echo "Not a git repository." #git rev-parse --git-dir 2> /dev/null;
+		fi
+		echo
+		cd "$StartingDir"
+	done
+	jlb::funcEnd "${errcode}" ; return $errcode
+}
+
+StartingDir="$(pwd)"
+git_fixperms::main_loop ${@}
