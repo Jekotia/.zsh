@@ -41,7 +41,7 @@ function git_fixperms::repo_loop() {
 		if [[ "$Task" == "Diff" ]] ; then
 			jlb::debug "Task: Diff"
 			if echo $line | grep -e "diff --git a/*" > /dev/null ; then
-				File=$(echo $line | sed -nr '/diff\s\-\-git\sa\// s/diff\s\-\-git\sa\/([^"]+)b\/.*/\1/p')
+				File=$(echo $line | sed -nr '/diff\s\-\-git\sa\// s/diff\s\-\-git\sa\/([^"]+)\sb\/.*/\1/p')
 				Task="OldMode"
 			fi
 
@@ -63,7 +63,7 @@ function git_fixperms::repo_loop() {
 
 				printf "%-3s %-3s %-60s\n" $OldMode $NewMode $File
 
-				echo "chmod $OldMode $File" >> "$Path/fixperms.txt"
+				echo "chmod $OldMode \"$File\"" >> "$Path/fixperms.txt"
 			fi
 			Task="Diff"
 		fi
@@ -158,3 +158,4 @@ function git_fixperms::main_loop() {
 
 StartingDir="$(pwd)"
 git_fixperms::main_loop ${@}
+
