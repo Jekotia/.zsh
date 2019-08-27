@@ -1,3 +1,6 @@
 [submodule "extras/powerlevel9k"]
 	path = extras/powerlevel9k
 	url = https://github.com/Powerlevel9k/powerlevel9k.git
+[submodule "extras/powerline-fonts"]
+	path = extras/powerline-fonts
+	url = https://github.com/powerline/fonts.git
