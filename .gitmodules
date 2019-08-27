@@ -4,3 +4,6 @@
 [submodule "extras/powerline-fonts"]
 	path = extras/powerline-fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "libbash"]
+	path = libbash
+	url = https://github.com/jekotia/libbash.git
