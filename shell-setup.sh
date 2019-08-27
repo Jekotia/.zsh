@@ -29,7 +29,7 @@ $pkgMgr -y install wget curl nano zsh git bc
 if [[ ! "$2" == "--local" ]] ; then
 	cd $origHome
 	echo --- Cloning \'.zsh\' from origin
-	sudo -u $origUser git clone ${zshSource} \
+	sudo -u $origUser git clone --recurse-submodules ${zshSource} \
 	&& chown -R $origUser:$origUser $origHome/.zsh
 
 	if [[ "$?" != "0" ]] ; then exit 1 ; fi
