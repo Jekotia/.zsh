@@ -16,3 +16,6 @@
 [submodule "extras/nanorc"]
 	path = extras/nanorc
 	url = https://github.com/scopatz/nanorc.git
+[submodule "extras/mintty-colors-solarized"]
+	path = extras/mintty-colors-solarized
+	url = https://github.com/mavnn/mintty-colors-solarized.git
