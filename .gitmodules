@@ -13,3 +13,6 @@
 [submodule "extras/dircolors-solarized"]
 	path = extras/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "extras/nanorc"]
+	path = extras/nanorc
+	url = https://github.com/scopatz/nanorc.git
