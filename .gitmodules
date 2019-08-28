@@ -7,3 +7,6 @@
 [submodule "libbash"]
 	path = libbash
 	url = https://github.com/jekotia/libbash.git
+[submodule "extras/awesome-terminal-fonts"]
+	path = extras/awesome-terminal-fonts
+	url = https://github.com/gabrielelana/awesome-terminal-fonts.git

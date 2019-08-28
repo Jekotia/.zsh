@@ -1,10 +1,13 @@
 #!/bin/sh
 
-cd ~/.zsh/extras/awesome-terminal-fonts
+fontDir="${HOME}/.local/share/fonts"
+fontConfigDir="${HOME}/.config/fontconfig"
 
-mkdir -p ~/.local/share/fonts/
-cp -f ./build/*.ttf ~/.local/share/fonts/
-cp -f ./build/*.sh ~/.local/share/fonts/
-mkdir -p ~/.config/fontconfig/conf.d
-cp -f ./config/* ~/.config/fontconfig/conf.d
-fc-cache -fv ~/.local/share/fonts/
+cd "${HOME}/.zsh/extras/awesome-terminal-fonts" || exit 1
+
+mkdir -p "${fontDir}"
+cp -f ./build/*.ttf "${fontDir}"
+cp -f ./build/*.sh "${fontDir}"
+mkdir -p "${fontConfigDir}/conf.d"
+cp -f ./config/* "${fontConfigDir}/conf.d"
+fc-cache -fv "${fontDir}"
