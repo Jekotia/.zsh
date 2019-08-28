@@ -10,3 +10,6 @@
 [submodule "extras/awesome-terminal-fonts"]
 	path = extras/awesome-terminal-fonts
 	url = https://github.com/gabrielelana/awesome-terminal-fonts.git
+[submodule "extras/dircolors-solarized"]
+	path = extras/dircolors-solarized
+	url = https://github.com/seebi/dircolors-solarized.git
