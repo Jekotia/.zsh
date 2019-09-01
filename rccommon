@@ -62,18 +62,23 @@ setopt HIST_EXPIRE_DUPS_FIRST
 export HISTSIZE=1000
 
 # Make sure nano highlighting is turned on
-## Syntax files from https://github.com/scopatz/nanorc
+
 if [[ ! -e ${HOME}/.nanorc ]] ; then
-	touch ${HOME}/.nanorc
+	ln -s "${HOME}/.zsh/extras/nanorc/nanorc.custom" "${HOME}/.nanorc"
 fi
 
-if ! cat ${HOME}/.nanorc | grep "set nowrap" > /dev/null ; then
-	echo "set nowrap" >> ${HOME}/.nanorc
-fi
+## Syntax files from https://github.com/scopatz/nanorc
+#if [[ ! -e ${HOME}/.nanorc ]] ; then
+#	touch ${HOME}/.nanorc
+#fi
 
-if ! grep -f ~/.zsh/extras/nanorc/nanorc ~/.nanorc > /dev/null ; then
-	cat ~/.zsh/extras/nanorc/nanorc >> ~/.nanorc
-fi
+#if ! cat ${HOME}/.nanorc | grep "set nowrap" > /dev/null ; then
+#	echo "set nowrap" >> ${HOME}/.nanorc
+#fi
+
+#if ! grep -f ~/.zsh/extras/nanorc/nanorc.custom ~/.nanorc > /dev/null ; then
+#	cat ~/.zsh/extras/nanorc/nanorc.custom >> ~/.nanorc
+#fi
 
 
 if [[ ! -e ${HOME}/.gitconfig ]] ; then
