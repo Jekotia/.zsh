@@ -145,7 +145,7 @@ function git_fixperms::main_loop() {
 		printf "%s \n" $TargetPath
 
 		cd "$WorkPath"
-		if [ -d .git ]; then
+		if [ -d .git ] || git rev-parse --git-dir 2> /dev/null ; then
 			git_fixperms::repo_loop "${WorkPath}"
 		else
 			echo "Not a git repository." #git rev-parse --git-dir 2> /dev/null;
