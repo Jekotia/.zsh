@@ -64,7 +64,7 @@ export HISTSIZE=1000
 # Make sure nano highlighting is turned on
 
 if [[ ! -e ${HOME}/.nanorc ]] ; then
-	ln -s "${HOME}/.zsh/extras/nanorc/nanorc.custom" "${HOME}/.nanorc"
+	ln -s "${HOME}/.zsh/extras/nanorc.custom" "${HOME}/.nanorc"
 fi
 
 ## Syntax files from https://github.com/scopatz/nanorc
@@ -76,8 +76,8 @@ fi
 #	echo "set nowrap" >> ${HOME}/.nanorc
 #fi
 
-#if ! grep -f ~/.zsh/extras/nanorc/nanorc.custom ~/.nanorc > /dev/null ; then
-#	cat ~/.zsh/extras/nanorc/nanorc.custom >> ~/.nanorc
+#if ! grep -f ~/.zsh/extras/nanorc.custom ~/.nanorc > /dev/null ; then
+#	cat ~/.zsh/extras/nanorc.custom >> ~/.nanorc
 #fi
 
 
