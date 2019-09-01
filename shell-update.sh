@@ -7,8 +7,8 @@ if [[ "$USER" == "root" ]] ; then
 else
 	cd ~/.zsh
 	--- echo Updating \'.zsh.git\' from origin
+	git pull || exit 1
 	git submodule update --init --recursive || exit 1
-	git pull origin || exit 1
 
 	### https://github.com/gabrielelana/awesome-terminal-fonts
 	if [ -d ~/.zsh/extras/awesome-terminal-fonts ] ; then

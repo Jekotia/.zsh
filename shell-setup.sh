@@ -47,6 +47,14 @@ else
 	else
 		echo "WARNING: Failed to find zshenv file!"
 	fi
+
+	if [ ! -e "${origHome}/.nanorc" ] ; then
+		echo "Linking ~/.nanorc to ~/.zsh/extras/nanorc/nanorc.custom"
+		ln -s "${origHome}/.zsh/extras/nanorc/nanorc.custom" "${origHome}/.nanorc" || echo "Failed to create link"
+
+		echo "Setting ownership of ~/.nanorc"
+		chown $origUser:$origUser $origHome/.nanorc || echo "Failed to set ownership"
+	fi
 fi
 
 cd $origHome/.zsh/extras/powerline-fonts/

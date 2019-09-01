@@ -1,0 +1,57 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+#[[ $0 != $BASH_SOURCE ]] && echo "Script is being sourced" || echo "Script is being run"
+
+############## Run local hook before repo hook ################
+if [ -f $DIR/$(basename ${BASH_SOURCE[0]})-local-pre ] ; then #
+	source $DIR/$(basename ${BASH_SOURCE[0]})-local-pre       #
+fi                                                            #
+###############################################################
+
+# VARS
+	## PATHS
+		path="./"
+		nanorc="nanorc"
+		customrc="nanorc.custom"
+	#PATTERNS
+		# DESIGNED TO MATCH: include "~/.zsh/extras/nanorc/coffeescript.nanorc"
+		find='include\s"\~\/\.nano\/'
+		replace='include "\~\/\.zsh\/extras\/nanorc\/'
+
+rewrite_nanorc() {
+	#construct $customrc
+	echo "set nowrap" > "${path}/${customrc}"
+	#cat "${path}/${nanorc}" >> "${path}/${customrc}"
+
+	# Test to ensure files exist
+	while read -r line; do
+		if [[ "$line " != "set nowrap" ]] ; then
+			outLine=$(sed "s|$find|$replace|g" <<< $line)
+			testLine="${outLine:9:-1}"
+#			echo "outLine: $outLine"
+#			echo "testLine: $testLine"
+
+			if eval test -f ${testLine} ; then
+				echo "${outLine}" >> "${customrc}"
+			fi
+#			break
+
+
+			#modify paths within $customrc
+#			sed -i \
+#				"s/${find}/${replace}/g" \
+#				"${customrc}"
+		fi
+	done <"${nanorc}"
+
+	mv "${customrc}" ../
+}
+
+rewrite_nanorc
+
+############### Run local hook after repo hook #################
+if [ -f $DIR/$(basename ${BASH_SOURCE[0]})-local-post ] ; then #
+	source $DIR/$(basename ${BASH_SOURCE[0]})-local-post       #
+fi                                                             #
+################################################################
