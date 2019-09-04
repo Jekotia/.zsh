@@ -8,7 +8,7 @@ if yum --version ; then
 		mv /etc/zshenv.rpmsave /etc/zshenv
 	fi
 
-	sudo yum update || exit
+#	sudo yum update || exit
 	sudo yum install -y git make ncurses-devel gcc autoconf man || exit
 fi
 
