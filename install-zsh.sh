@@ -1,6 +1,6 @@
 #! /bin/bash
 if $(which yum) ; then
-	sudo yum update -y
+	sudo yum update
 	sudo yum install -y git make ncurses-devel gcc autoconf man
 fi
 
