@@ -5,25 +5,36 @@ confdir="${HOME}/.zsh/binconf/myctl"
 
 service=$1 ; shift
 if [ -z "$service" ] ; then
-	echo "Missing required argument: service"
-	exit 1
+    echo "Missing required argument: service"
+    exit 1
 fi
 
 action=$1 ; shift
 if [ -z "$action" ] ; then
-	echo "Missing required argument: action"
-	exit 1
+    echo "Missing required argument: action"
+    exit 1
 fi
+
+case $1 in
+    --verbose|-v)
+        verbose="true"
+        shift
+    ;;
+esac
 
 hostname=$(hostname)
 operation_path="${confdir}/${hostname}/${service}/${action}"
 operation=$(cat "$operation_path")
 
-echo "confdir:        ${confdir}"
-echo "hostname:       ${hostname}"
-echo "service:        ${service}"
-echo "action:         ${action}"
-echo ""
-echo "operation_path: ${operation_path}"
-echo "operation:      $operation"
+if [[ "$verbose" == "true" ]] ; then
+    echo "confdir:        ${confdir}"
+    echo "hostname:       ${hostname}"
+    echo "service:        ${service}"
+    echo "action:         ${action}"
+    echo ""
+    echo "operation_path: ${operation_path}"
+    echo "operation:      $operation"
+fi
+
 . "$operation_path"
+echo "STATUS: $?"
