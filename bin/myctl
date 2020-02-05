@@ -1,22 +1,15 @@
 #! /bin/bash
 #### BEGIN CONFIG ####
-DEBUG="false"
 confdir="${HOME}/.zsh/binconf/myctl"
 ##### END CONFIG #####
 
-function debug() {
-	if [[ "$DEBUG" == "true" ]] ; then
-		echo "DEBUG: $@"
-	fi
-}
-
-service=$1 ; shift ; debug "service: $service"
+service=$1 ; shift
 if [ -z "$service" ] ; then
 	echo "Missing required argument: service"
 	exit 1
 fi
 
-action=$1 ; shift ; debug "action: $action"
+action=$1 ; shift
 if [ -z "$action" ] ; then
 	echo "Missing required argument: action"
 	exit 1
@@ -34,38 +27,3 @@ echo ""
 echo "operation_path: ${operation_path}"
 echo "operation:      $operation"
 . "$operation_path"
-
-#if $? ; then
-#	echo "Successfully executed command."
-#else
-#	echo "Failed to execute command."
-#fi
-
-#for file in $confdir/*.conf ; do
-#	#[ -e "$filename" ] || continue
-#	filename=$(basename $file | cut -f 1 -d '.')
-#
-#	if hostname | grep $filename > /dev/null ; then
-#		echo "Using $file"
-#		. $file
-#	fi
-#done
-
-#for defined_service in ${defined_services[services]} ; do
-#	debug "defined_service: $defined_service"
-#	if [[ "$defined_service" == "$service" ]] ; then
-#		debug "defined_service matches service: $service"
-#
-#		operation="${service}_${action}"
-#
-#		for entry in ${!defined_services[@]} ; do
-#			debug "comparing '${operation}' to '${entry}'"
-#			if [[ "${operation}" == "${entry}" ]] ; then
-#				echo "Executing: ${defined_services[$operation]}"
-#				${defined_services[$operation]}
-#				break
-#			fi
-#		done
-#		break
-#	fi
-#done
