@@ -1,0 +1,4 @@
+#! /bin/bash
+sudo systemctl restart docker.service \
+&& printline \
+&& sudo systemctl restart docker.socket

@@ -1,0 +1,4 @@
+#! /bin/bash
+sudo systemctl start docker.service \
+&& printline \
+&& sudo systemctl start docker.socket

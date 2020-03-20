@@ -3,6 +3,10 @@
 confdir="${HOME}/.zsh/binconf/myctl"
 ##### END CONFIG #####
 
+function printline() {
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+}
+
 service=$1 ; shift
 if [ -z "$service" ] ; then
     echo "Missing required argument: service"
@@ -24,17 +28,32 @@ esac
 
 hostname=$(hostname)
 operation_path="${confdir}/${hostname}/${service}/${action}"
-operation=$(cat "$operation_path")
+common_path="${confdir}/${hostname}/${service}/common.sh"
 
 if [[ "$verbose" == "true" ]] ; then
-    echo "confdir:        ${confdir}"
-    echo "hostname:       ${hostname}"
-    echo "service:        ${service}"
-    echo "action:         ${action}"
-    echo ""
+    echo "  Confdir: ${confdir}"
+    echo " Hostname: ${hostname}"
+    echo "  Service: ${service}"
+    echo "   Action: ${action}"
+    printline
+fi
+
+if [ -e ${common_path} ] ; then
+    if [[ "$verbose" == "true" ]] ; then
+        echo "common_path: ${common_path}"
+        grep -v '^#'  "$common_path" | sed -e 's/^/   /'
+        printline
+    fi
+    . "${common_path}"
+fi
+
+if [[ "$verbose" == "true" ]] ; then
     echo "operation_path: ${operation_path}"
-    echo "operation:      $operation"
+    grep -v '^#'  "$operation_path" | sed -e 's/^/   /'
+    printline
 fi
 
 . "$operation_path"
-echo "STATUS: $?"
+status=$?
+printline
+echo "STATUS: $status"

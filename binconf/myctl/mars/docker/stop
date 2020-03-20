@@ -1,0 +1,4 @@
+#! /bin/bash
+sudo systemctl stop docker.service \
+&& printline \
+&& sudo systemctl stop docker.socket

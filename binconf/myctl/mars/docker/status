@@ -1,0 +1,4 @@
+#! /bin/bash
+sudo systemctl status docker.service \
+&& printline \
+&& sudo systemctl status docker.socket
