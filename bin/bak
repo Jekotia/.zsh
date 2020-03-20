@@ -1,0 +1,46 @@
+#! /bin/bash
+case $1 in
+	--test)
+		DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+		self="${DIR}/bak"
+		test="${DIR}/tests/bak"
+
+		{ shellcheck "$self" && shellcheck "$test" ; } && $test --test ; exit $?
+	;;
+	-*)
+		echo "Invalid argument."
+		exit 1
+	;;
+esac
+
+source="$*"
+target=""
+
+
+if [ -z "$source" ] ; then
+	echo "Missing required argument: source-path"
+	exit 1
+elif [ ! -e "$source" ] ; then
+	echo "Invalid source-path: $source"
+	exit 1
+fi
+
+if [[ $@ =~ .*\.bak$ ]] ; then
+	operation="restore"
+	target="${source::-4}"
+else
+	operation="backup"
+	target="${source}.$(date +"%Y-%m-%d_%H-%M-%S")"
+fi
+
+echo "operation: $operation"
+echo "   source: $source"
+echo "   target: $target"
+
+if [ -e "$target" ] ; then
+	echo "target already exists: $target"
+	exit 1
+else
+	mv -v "$source" "$target" | sed 's/^/  /'
+	exit $?
+fi

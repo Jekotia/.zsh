@@ -1,0 +1,9 @@
+#! /bin/bash
+path="$*"
+
+if [ -z $1 ] ; then
+        echo "A file name must be provided."
+        exit 1
+else
+        column -s, -t < $path | less -#2 -N -S
+fi
