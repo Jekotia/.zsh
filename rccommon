@@ -154,7 +154,7 @@ alias diff="git diff --no-index --color-words"
 alias wanip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 #-> Force allocation of a tty
-#alias ssh='ssh -t'
+alias ssh='ssh -t'
 
 #alias grep='grep --color=always'
 
