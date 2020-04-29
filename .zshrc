@@ -1,3 +1,19 @@
+if [ -e ~/.zsh/rccommon ] ; then
+	source ~/.zsh/rccommon
+fi
+
+if uname | grep "CYGWIN" > /dev/null 2>&1 ; then
+	if [ -e ~/.zsh/rcwin ] ; then
+		source ~/.zsh/rcwin
+	fi
+else
+	if [ -e ~/.zsh/rclinux ] ; then
+		# To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
+		[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
+		source ~/.zsh/rclinux
+	fi
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -24,21 +40,7 @@ else
 fi
 
 
-if [ -e ~/.zsh/rccommon ] ; then
-	source ~/.zsh/rccommon
-fi
 
-if uname | grep "CYGWIN" > /dev/null 2>&1 ; then
-	if [ -e ~/.zsh/rcwin ] ; then
-		source ~/.zsh/rcwin
-	fi
-else
-	if [ -e ~/.zsh/rclinux ] ; then
-		# To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
-		[[ ! -f ~/.zsh/.p10k.zsh ]] || source ~/.zsh/.p10k.zsh
-		source ~/.zsh/rclinux
-	fi
-fi
 
 if [ -e ~/.profile ] ; then
 	source ~/.profile
