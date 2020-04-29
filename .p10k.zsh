@@ -51,11 +51,7 @@
     disk_usage            # disk usage
     load                  # CPU load
     ram                   # free RAM
-    $(if hostname | grep hyperion > /dev/null 2>&1 \
-    || hostname | grep mars > /dev/null 2>&1 ; then
-        echo "battery"
-    fi)
-    #battery               # internal battery
+    battery               # internal battery
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
