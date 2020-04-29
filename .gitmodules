@@ -1,6 +1,3 @@
-[submodule "extras/powerlevel9k"]
-	path = extras/powerlevel9k
-	url = https://github.com/Powerlevel9k/powerlevel9k.git
 [submodule "extras/powerline-fonts"]
 	path = extras/powerline-fonts
 	url = https://github.com/powerline/fonts.git
@@ -19,3 +16,6 @@
 [submodule "extras/mintty-colors-solarized"]
 	path = extras/mintty-colors-solarized
 	url = https://github.com/mavnn/mintty-colors-solarized.git
+[submodule "extras/powerlevel10k"]
+	path = extras/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

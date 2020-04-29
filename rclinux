@@ -1,21 +1,7 @@
 #! /bin/bash
-### https://github.com/bhilburn/powerlevel9k
-if [[ -e ~/.zsh/extras/powerlevel9k/powerlevel9k.zsh-theme ]] ; then
-	source ~/.zsh/extras/powerlevel9k/powerlevel9k.zsh-theme
-	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
-	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator ip disk_usage load ram)
-
-    if hostname | grep hyperion > /dev/null \
-    || hostname | grep mars > /dev/null ; then
-        POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=($POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS battery)
-    fi
-
-	POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-	#POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-	POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="↱"
-	POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="↳ "
-	#POWERLEVEL9K_COLOR_SCHEME='light'
-	POWERLEVEL9K_DISK_USAGE_BACKGROUND='blue'
+### https://github.com/romkatv/powerlevel10k
+if [[ -e ~/.zsh/extras/powerlevel10k/powerlevel10k.zsh-theme ]] ; then
+	source ~/.zsh/extras/powerlevel10k/powerlevel10k.zsh-theme
 fi
 
 if [[ -e /var/www/html/owncloud/occ ]] ; then

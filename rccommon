@@ -8,9 +8,9 @@ setopt histignorespace
 setopt HIST_SAVE_NO_DUPS
 
 ### https://github.com/mavnn/mintty-colors-solarized
-if [[ -e ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
-	source ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark
-fi
+#if [[ -e ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark ]] ; then
+#	source ${HOME}/.zsh/extras/mintty-colors-solarized/sol.dark
+#fi
 
 ### https://github.com/seebi/dircolors-solarized
 if [[ -e ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
