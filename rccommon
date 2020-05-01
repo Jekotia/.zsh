@@ -17,43 +17,22 @@ if [[ -e ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
 	eval `dircolors ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
 fi
 
-# Set PATH so it includes /usr/local/sbin if it exists
-if [ -d "/usr/local/sbin" ] ; then
- PATH="/usr/local/sbin:${PATH}"
-fi
+declare -a paths=(
+	"/usr/local/sbin"
+	"${HOME}/.zsh/bin"
+	"${HOME}/bin"
+	"${HOME}/bin/unix-tools"
+	"${HOME}/bin/work"
+	"${HOME}/bin/work/unix-tools"
+	"${HOME}/Dockerfiles/bin"
+	"${HOME}/go/bin"
+)
 
-# Set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/bin" ] ; then
- PATH="${HOME}/bin:${PATH}"
-fi
-
-# Set PATH so that it includes unix-tools project bin
-if [ -d "${HOME}/bin/unix-tools" ] ; then
-	PATH="${HOME}/bin/unix-tools:${PATH}"
-fi
-
-# Set PATH so that it includes work-tools project bin
-if [ -d "${HOME}/bin/work/unix-tools" ] ; then
-	PATH="${HOME}/bin/work/unix-tools:${PATH}"
-fi
-if [ -d "${HOME}/bin/work" ] ; then
-	PATH="${HOME}/bin/work:${PATH}"
-fi
-
-# Set PATH so that it includes MY private bin
-if [ -d "${HOME}/.zsh/bin" ] ; then
-	PATH="${HOME}/.zsh/bin:${PATH}"
-fi
-
-if [ -d "${HOME}/Dockerfiles/bin" ] ; then
-	PATH="${HOME}/Dockerfiles/bin:${PATH}"
-fi
-
-# Set PATH so that it includes go programs installed to ~/go/bin, if present
-if [ -d "~/go/bin" ] ; then
- PATH="~/go/bin:${PATH}"
-fi
-
+for path in "${paths[@]}" ; do
+	if [ -d "${path}" ] && ( [[ $PATH =~ ^$path: ]] || [[ $PATH =~ :$path: ]] || [[ $PATH =~ :$path$ ]] ) ; then
+		PATH="${path}:${PATH}"
+	fi
+done
 
 export HISTFILE=${HOME}/.zsh/history
 setopt INC_APPEND_HISTORY
