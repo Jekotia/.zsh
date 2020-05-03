@@ -17,7 +17,7 @@ if [[ -e ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
 	eval `dircolors ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
 fi
 
-declare -a paths=(
+declare -a binPaths=(
 	"/usr/local/sbin"
 	"${HOME}/.zsh/bin"
 	"${HOME}/bin"
@@ -28,9 +28,10 @@ declare -a paths=(
 	"${HOME}/go/bin"
 )
 
-for path in "${paths[@]}" ; do
-	if [ -d "${path}" ] && ( [[ $PATH =~ ^$path: ]] || [[ $PATH =~ :$path: ]] || [[ $PATH =~ :$path$ ]] ) ; then
-		PATH="${path}:${PATH}"
+for binPath in "${binPaths[@]}" ; do
+	if [ -d "${binPath}" ] && ( [[ $PATH =~ ^$binPath: ]] || [[ $PATH =~ :$binPath: ]] || [[ $PATH =~ :$binPath$ ]] ) ; then
+		PATH="${binPath}:${PATH}"
+		#echo "${binPath}:${PATH}"
 	fi
 done
 
