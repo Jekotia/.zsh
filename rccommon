@@ -24,6 +24,7 @@ declare -a binPaths=(
 	"${HOME}/bin/unix-tools"
 	"${HOME}/bin/work"
 	"${HOME}/bin/work/unix-tools"
+	"${HOME}/cargo/bin"
 	"${HOME}/Dockerfiles/bin"
 	"${HOME}/go/bin"
 )
