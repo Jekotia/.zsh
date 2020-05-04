@@ -62,3 +62,6 @@ sudo -u $origUser sh ./install.sh
 
 cd $origHome/.zsh/extras/
 sudo -u $origUser sh ./awesome-terminal-fonts-setup.sh
+
+echo "Linking .tmux.conf"
+ln -s $origHome/.zsh/.tmux.conf $origHome/.tmux.conf
