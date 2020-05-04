@@ -30,7 +30,7 @@ declare -a binPaths=(
 )
 
 for binPath in "${binPaths[@]}" ; do
-	if [ -d "${binPath}" ] && ( [[ $PATH =~ ^$binPath: ]] || [[ $PATH =~ :$binPath: ]] || [[ $PATH =~ :$binPath$ ]] ) ; then
+	if [ -d "${binPath}" ] && ! ( [[ $PATH =~ ^$binPath: ]] || [[ $PATH =~ :$binPath: ]] || [[ $PATH =~ :$binPath$ ]] ) ; then
 		PATH="${binPath}:${PATH}"
 		#echo "${binPath}:${PATH}"
 	fi
