@@ -37,3 +37,10 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
+
+# Import the navi widget, if it's available
+#-> https://stackoverflow.com/a/677212/1871306
+if hash navi 2>/dev/null ; then
+	source <(navi widget zsh)
+fi
