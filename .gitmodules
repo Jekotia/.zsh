@@ -19,3 +19,24 @@
 [submodule "extras/powerlevel10k"]
 	path = extras/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule ".tmux/plugins/tmux-cpu"]
+	path = .tmux/plugins/tmux-cpu
+	url = https://github.com/tmux-plugins/tmux-cpu.git
+[submodule ".tmux/plugins/tmux-net-speed"]
+	path = .tmux/plugins/tmux-net-speed
+	url = https://github.com/tmux-plugins/tmux-net-speed.git
+[submodule ".tmux/plugins/tmux-prefix-highlight"]
+	path = .tmux/plugins/tmux-prefix-highlight
+	url = https://github.com/tmux-plugins/tmux-prefix-highlight.git
+[submodule ".tmux/plugins/tmux-sensible"]
+	path = .tmux/plugins/tmux-sensible
+	url = https://github.com/tmux-plugins/tmux-sensible.git
+[submodule ".tmux/plugins/tmux-sidebar"]
+	path = .tmux/plugins/tmux-sidebar
+	url = https://github.com/tmux-plugins/tmux-sidebar.git
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm.git
+[submodule ".tmux/plugins/tmux-colors-solarized"]
+	path = .tmux/plugins/tmux-colors-solarized
+	url = https://git::@github.com/seebi/tmux-colors-solarized

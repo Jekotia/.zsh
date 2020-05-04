@@ -2,3 +2,4 @@
 compdump
 history*
 binconf/*.conf
+.tmux/sidebar
