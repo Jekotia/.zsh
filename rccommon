@@ -19,12 +19,12 @@ fi
 
 declare -a binPaths=(
 	"/usr/local/sbin"
+	"${HOME}/.cargo/bin"
 	"${HOME}/.zsh/bin"
 	"${HOME}/bin"
 	"${HOME}/bin/unix-tools"
 	"${HOME}/bin/work"
 	"${HOME}/bin/work/unix-tools"
-	"${HOME}/cargo/bin"
 	"${HOME}/Dockerfiles/bin"
 	"${HOME}/go/bin"
 )
