@@ -13,8 +13,9 @@ setopt HIST_SAVE_NO_DUPS
 #fi
 
 ### https://github.com/seebi/dircolors-solarized
-if [[ -e ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark ]] ; then
-	eval `dircolors ${HOME}/.zsh/extras/dircolors-solarized/dircolors.ansi-dark`
+dircolorsPath="${HOME}/.zsh/extras/dircolors-solarized/dircolors.256dark"
+if [[ -e ${dircolorsPath} ]] ; then
+	eval `dircolors "${dircolorsPath}"`
 fi
 
 declare -a binPaths=(
