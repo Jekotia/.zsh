@@ -20,6 +20,7 @@ fi
 
 declare -a binPaths=(
 	"/usr/local/sbin"
+	"${HOME}/.cabal/bin"
 	"${HOME}/.cargo/bin"
 	"${HOME}/.zsh/bin"
 	"${HOME}/bin"
