@@ -22,6 +22,7 @@ declare -a binPaths=(
 	"/usr/local/sbin"
 	"${HOME}/.cabal/bin"
 	"${HOME}/.cargo/bin"
+	"${HOME}/.fzf/bin"
 	"${HOME}/.zsh/bin"
 	"${HOME}/bin"
 	"${HOME}/bin/unix-tools"
