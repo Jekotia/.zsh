@@ -7,7 +7,7 @@ function sshCmd() {
 #	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'set -g status-right \"\" ; tmux new -s bashtop \"set -g status-left test; bashtop\"'"
 #	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'set -g status-right \"\" ; tmux new -s bashtop \"set -g status-left test; bashtop\"'"
 #	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'tmux a bashtop || tmux new -s bashtop ./.zsh/bashtop.sh'"
-	local cmd="ssh -tt $host -o 'RemoteCommand none' -C './.zsh/tmux-remote-bashtop.sh'"
+	local cmd="ssh -tt $host -o 'RemoteCommand none' -C './.zsh/scripts/tmux-remote-bashtop.sh'"
 #	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'bashtop'"
 	echo $cmd
 	return
