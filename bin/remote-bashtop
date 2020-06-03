@@ -3,12 +3,7 @@ TMUX_SESSION_NAME="remotemonitor"
 
 function sshCmd() {
 	local host="$1"
-#	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'tmux a bashtop || tmux new -s bashtop bashtop'"
-#	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'set -g status-right \"\" ; tmux new -s bashtop \"set -g status-left test; bashtop\"'"
-#	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'set -g status-right \"\" ; tmux new -s bashtop \"set -g status-left test; bashtop\"'"
-#	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'tmux a bashtop || tmux new -s bashtop ./.zsh/bashtop.sh'"
-	local cmd="ssh -tt $host -o 'RemoteCommand none' -C './.zsh/scripts/tmux-remote-bashtop.sh'"
-#	local cmd="ssh -tt $host -o 'RemoteCommand none' -C 'bashtop'"
+	local cmd="ssh -tt $host -o 'RemoteCommand none' -C './.zsh/scripts/tmux-bashtop.sh'"
 	echo $cmd
 	return
 }
@@ -17,25 +12,12 @@ if tmux ls 2> /dev/null ; then
 	tmux kill-session -t "${TMUX_SESSION_NAME}" 2> /dev/null
 fi
 
-if [[ "$1" == "legacy" ]] ; then
-	echo "LEGACY METHOD"
+CMD_HYPERION="$(sshCmd 'hyperion')"
+CMD_MERCURY="$(sshCmd 'mercury')"
 
-	echo "new session" \
-	&& tmux new-session -d -s "${TMUX_SESSION_NAME}" \
-	&& echo "split window" \
-	&& tmux split-window -t "${TMUX_SESSION_NAME}" -h \
-	&& echo "hyperion, left" \
-	&& tmux send-keys -t "${TMUX_SESSION_NAME}".0 "ssh hyperion -o 'RemoteCommand none' -C bashtop" Enter \
-	&& echo "mercury, right" \
-	&& tmux send-keys -t "${TMUX_SESSION_NAME}".1 "ssh mercury -o 'RemoteCommand none' -C bashtop" Enter
-else
-	CMD_HYPERION="$(sshCmd 'hyperion')"
-	CMD_MERCURY="$(sshCmd 'mercury')"
-
-	tmux new -d -s "${TMUX_SESSION_NAME}" "${CMD_HYPERION}" \; \
-		split-window -d -h "${CMD_MERCURY}" #\; down-pane \; \
+tmux new -d -s "${TMUX_SESSION_NAME}" "${CMD_HYPERION}" \; \
+	split-window -d -h "${CMD_MERCURY}" #\; down-pane \; \
 #			new-window -d 'echo window-2;sleep 4' \; next-window \; \
 #				attach \;
-fi
 
 tmux attach-session -t "${TMUX_SESSION_NAME}"
