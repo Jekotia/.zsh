@@ -1,0 +1,12 @@
+#! /bin/bash
+
+if [ -z $1 ] ; then
+	echo "Missing search string."
+	exit 1
+fi
+
+# Print column headers
+ps aux | head -n 1
+
+# Print output
+ps aux | grep "$1" | grep -v 'grep'
