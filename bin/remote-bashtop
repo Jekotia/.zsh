@@ -15,7 +15,7 @@ fi
 CMD_HYPERION="$(sshCmd 'hyperion')"
 CMD_MERCURY="$(sshCmd 'mercury')"
 
-read -p "Press enter to continue"
+read -p "Set terminal to desired size and then press enter to continue. This is used to determine which direction to split in."
 
 VSPLIT_PANE_WIDTH=$(expr $(tput cols) / 2 )
 VSPLIT_PANE_HEIGHT=$(tput lines)
