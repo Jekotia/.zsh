@@ -1,3 +1,7 @@
+if [ -z "$TMUX" ] ; then
+	export TERM=xterm-256color
+fi
+
 if [ -e ~/.zsh/rccommon ] ; then
 	source ~/.zsh/rccommon
 fi
@@ -21,7 +25,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export TERM="xterm-256color"
+#export TERM="xterm-256color"
 
 if [[ "$(hostname)" == "jameli-10P64D" ]] ; then
 	POWERLEVEL9K_IP_INTERFACE="eth6"
@@ -45,4 +49,3 @@ fi
 if [ -e ~/.profile ] ; then
 	source ~/.profile
 fi
-
