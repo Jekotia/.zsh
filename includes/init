@@ -1,0 +1,20 @@
+#! /bin/bash
+if [[ "$(< /proc/sys/kernel/osrelease)" == *Microsoft ]]; then
+	readonly platform="wsl"
+elif uname | grep "CYGWIN" > /dev/null 2>&1 ; then
+	readonly platform="cygwin"
+else
+	readonly platform="linux"
+fi
+
+function source_directory() {
+	target="$1"
+	glob="$2"
+	while IFS= read -r -d '' file; do
+		#shellcheck disable=SC1090
+		source "$file"
+	done< <(find "${target}" -name "${glob}" -type f -print0)
+}
+
+source_directory "${ZDOTDIR}/includes/functions" "*.sh"
+source_directory "${ZDOTDIR}/includes/widgets" "*.zsh"
