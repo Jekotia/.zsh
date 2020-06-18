@@ -10,13 +10,13 @@
 		"${HOME}/.ssh/id_git"
 	)
 
-	ssh_host="atlas"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="ganymede"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="hyperion"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="jupiter"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="mars"		; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="mercury"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
-	ssh_host="saturn"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="atlas"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="ganymede"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="hyperion"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="jupiter"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="mars"		; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="mercury"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
+	ssh_host="saturn"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/.ssh/id_$ssh_host"); }
 
 	[[ "$USERNAME" == "pi" ]] &&  { ssh_keyfiles+=("id_interpi"); }
 
