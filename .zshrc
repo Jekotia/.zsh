@@ -1,10 +1,24 @@
 #! /bin/bash
+#>> init script
+	#shellcheck source=includes/init
+	source "${ZDOTDIR}/includes/init"
+
 #>> Config arrays
 	declare -a ssh_keyfiles=(
 		"${HOME}/.ssh/id_rsa"
 		"${HOME}/.ssh/id_jameli"
 		"${HOME}/.ssh/id_git"
 	)
+
+	ssh_host="atlas"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="ganymede"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="hyperion"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="jupiter"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="mercury"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+	ssh_host="saturn"	; hostname | grep "$ssh_host" && { ssh_keyfiles+=("id_$ssh_host"); }
+
+	[[ "$USERNAME" == "pi" ]] &&  { ssh_keyfiles+=("id_interpi"); }
+
 	declare -a binPaths=(
 		"/usr/local/sbin"
 		"${HOME}/.cabal/bin"
@@ -19,9 +33,7 @@
 		"${HOME}/go/bin"
 	)
 
-#>> init script
-	#shellcheck source=includes/init
-	source "${ZDOTDIR}/includes/init"
+
 #>> ssh-agent setup
 	if is_cygwin ; then
 		# startup of the ssh-agent
