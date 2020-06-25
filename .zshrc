@@ -286,7 +286,7 @@
 		alias sftp="sftp -o 'RemoteCommand none'"
 	#-> Easier access to listing packages installed on a device connected via ADB
 		alias adb-packages='adb shell "pm list packages"'
-	alias grep='grep --color=always'
+	alias grep='grep --color=auto'
 
 	#irccert='sudo su -l weechat -c "irccert $1"'
 
