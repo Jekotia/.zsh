@@ -251,6 +251,10 @@
 	if hub --version > /dev/null 2>&1 ; then
 		eval "$(hub alias -s)"
 	fi
+	# If microk8s is installed, alias its kubectl to mkctl
+	if hash microk8s > /dev/null 2>&1 ; then
+		alias mkctl="microk8s kubectl"
+	fi
 
 	#>> Set an alias for nano that is tailored to the capabilities of the installed version.
 		#alias nano='nano--tabsize=4 --linenumbers --wordbounds --softwrap --constantshow'
