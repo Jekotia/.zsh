@@ -33,6 +33,7 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     context                 # user@hostname
+    vi_mode                 # vi mode (you don't need this if you've enabled prompt_char)
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
@@ -92,7 +93,6 @@
     vim_shell               # vim shell indicator (:sh)
     midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
-    vi_mode                 # vi mode (you don't need this if you've enabled prompt_char)
     # vpn_ip                # virtual private network indicator
     # swap                  # used swap
     todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
