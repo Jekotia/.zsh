@@ -22,16 +22,17 @@
 
 	declare -a binPaths=(
 		"/usr/local/sbin"
+		"/snap/bin"
 		"${HOME}/.cabal/bin"
 		"${HOME}/.cargo/bin"
 		"${HOME}/.fzf/bin"
-		"${ZDOTDIR}/bin"
 		"${HOME}/bin"
 		"${HOME}/bin/unix-tools"
 		"${HOME}/bin/work"
 		"${HOME}/bin/work/unix-tools"
 		"${HOME}/Dockerfiles/bin"
 		"${HOME}/go/bin"
+		"${ZDOTDIR}/bin"
 	)
 
 
