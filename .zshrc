@@ -33,6 +33,7 @@
 		"${HOME}/Dockerfiles/bin"
 		"${HOME}/go/bin"
 		"${ZDOTDIR}/bin"
+		"${HOME}/.local/bin"
 	)
 
 
@@ -125,6 +126,8 @@
 
 	is_cygwin && _fixpath
 
+	#>> Enable `fuck` as an alias for `thefuck`
+	eval $(thefuck --alias)
 
 #>> Make sure nano syntax highlighting is turned on
 	if [[ ! -e ${HOME}/.nanorc ]] ; then
