@@ -1,0 +1,7 @@
+#! /bin/bash
+AppName="$*"
+SearchDirectory="${HOME}/.local/share/applications/"
+
+grep -ir "$AppName" "$SearchDirectory" \
+| sed "s|^${SearchDirectory}chrome-||" \
+| sed "s|-Default.desktop:Name=|	|"

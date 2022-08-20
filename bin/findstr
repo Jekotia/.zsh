@@ -26,6 +26,9 @@ while :; do
 			args="${args} --verbose"
 			GREP_ARGS="${GREP_ARGS} --files-with-matches"
 		;;
+		"-i"|"--ignore-case")
+			GREP_ARGS="${GREP_ARGS} --ignore-case"
+		;;
 		-*|--*)
 			echo "Invalid argument ($1) provided."
 			exit 1

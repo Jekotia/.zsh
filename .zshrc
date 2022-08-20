@@ -78,6 +78,15 @@
 			fi
 		fi
 	done
+
+
+
+#>> Show the MOTD if it exists
+	if [ -e /etc/motd ] ; then
+		cat /etc/motd
+	fi
+
+##>> NO OUTPUT SHOULD BE GENERATED AFTER THIS POINT DUE TO P10K INSTANT PROMPT
 #>> p10k instant prompt
 	if ! is_cygwin ; then
 		#shellcheck disable=SC1091
@@ -313,10 +322,6 @@
 		source "${HOME}"/.profile
 	fi
 
-#>> Show the MOTD if it exists
-	if [ -e /etc/motd ] ; then
-		cat /etc/motd
-	fi
 #>> Misc reference
 	# User configuration
 
