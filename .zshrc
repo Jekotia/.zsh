@@ -135,8 +135,10 @@
 
 	is_cygwin && _fixpath
 
-	#>> Enable `fuck` as an alias for `thefuck`
-	eval $(thefuck --alias)
+	if fuck > /dev/null 2>&1 ; then
+		#>> Enable `fuck` as an alias for `thefuck`
+		eval $(thefuck --alias)
+	fi
 
 #>> Make sure nano syntax highlighting is turned on
 	if [[ ! -e ${HOME}/.nanorc ]] ; then
