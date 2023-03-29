@@ -50,7 +50,7 @@ else
 
 	if [ ! -e "${origHome}/.nanorc" ] ; then
 		echo "Linking ~/.nanorc to ~/.zsh/extras/nanorc/nanorc.custom"
-		ln -s "${origHome}/.zsh/extras/nanorc/nanorc.custom" "${origHome}/.nanorc" || echo "Failed to create link"
+		ln -s "${origHome}/.zsh/extras/nanorc.custom" "${origHome}/.nanorc" || echo "Failed to create link"
 
 		echo "Setting ownership of ~/.nanorc"
 		chown $origUser:$origUser $origHome/.nanorc || echo "Failed to set ownership"
