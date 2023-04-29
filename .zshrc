@@ -236,17 +236,8 @@
 			source ${ZDOTDIR}/extras/powerlevel10k/powerlevel10k.zsh-theme
 		fi
 
-		if [[ "$(hostname)" == "jameli-10P64D" ]] ; then
-			POWERLEVEL9K_IP_INTERFACE="eth6"
-
-		elif [[ "$(hostname -s)" == "userowncloud" ]] ; then
-			POWERLEVEL9K_IP_INTERFACE="enp2s0"
-
-		elif [[ "$(hostname -s)" == "owncloud" ]] ; then
-			POWERLEVEL9K_IP_INTERFACE="ens3"
-
-		elif [[ "$(hostname -s)" == "bugzilla" ]] ; then
-			POWERLEVEL9K_IP_INTERFACE="eth0"
+		if [[ "$(hostname)" == "pan" ]] || [[ "$(hostname)" == "pan.jekotia.net" ]] ; then
+			POWERLEVEL9K_IP_INTERFACE="enp3s0f0"
 
 		else
 			POWERLEVEL9K_IP_INTERFACE="eth0"
