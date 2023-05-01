@@ -1,4 +1,5 @@
-#! /bin/bash
+#! /usr/bin/env bash
+
 function start_ssh_agent {
 	env_file=${1:-$HOME/.ssh/environment}
 
@@ -6,6 +7,7 @@ function start_ssh_agent {
 	/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${env_file}"
 	echo succeeded
 	chmod 600 "${env_file}"
-	. "${env_file}" > /dev/null
+	# shellcheck disable=SC1090
+	source "${env_file}" > /dev/null
 	#/usr/bin/ssh-add;
 }
