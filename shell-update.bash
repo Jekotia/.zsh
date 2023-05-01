@@ -1,4 +1,5 @@
-#! /bin/bash
+#! /usr/bin/env bash
+
 if [[ "$USER" == "root" ]] ; then
 	cd ~/.zsh
 	--- echo Updating \'.zsh.git\' from origin

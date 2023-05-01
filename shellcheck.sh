@@ -19,11 +19,11 @@ case $1 in
 	;;
 	tooling)
 		shellcheck \
-			install-hooks.sh \
-			shell-remote.sh \
-			shell-setup-local.sh \
-			shell-setup.sh \
-			shell-update.sh \
+			install-hooks.bash \
+			shell-remote.bash \
+			shell-setup-local.bash \
+			shell-setup.bash \
+			shell-update.bash \
 			shellcheck.sh
 	;;
 	*)

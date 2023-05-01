@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 #zshSource="https://git.jekotia.net/jekotia/.zsh.git"
 zshSource="https://github.com/Jekotia/.zsh.git"
