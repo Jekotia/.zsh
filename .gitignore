@@ -1,5 +1,4 @@
-.zcompdump*
-compdump
+.zcompdump
 history*
 binconf/*.conf
 .tmux/sidebar

@@ -7,7 +7,7 @@ if [ -d "${ZDOTDIR}"/.zshrc.d/completions ] ; then
 fi
 
 autoload -Uz compinit promptinit
-compinit -d "${ZDOTDIR}"/compdump
+compinit -d "${ZDOTDIR}"/.zcompdump
 promptinit
 
 #autoload bashcompinit
