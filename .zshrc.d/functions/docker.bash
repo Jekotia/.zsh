@@ -1,7 +1,14 @@
 #! /usr/bin/env bash
 docker() {
+docker_ps_table="{{.Names}}\t"\
+"{{.State}}\t"\
+"{{.RunningFor}}\t"\
+"{{.Status}}\t"\
+"{{.Size}}\t"\
+"{{.Ports}}"
+
     if [[ $@ == "ps" ]]; then
-        command docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}" | more
+        command docker ps --format "table ${docker_ps_table}" | more
     else
         command docker "$@"
     fi

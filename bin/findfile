@@ -1,60 +1,10 @@
 #! /bin/bash
-
-find "$1" -type f -name "$2"
-exit $?
-#-> SEARCH FOR STRING WITHIN FILES LOCATED IN THE CURRENT DIRECTORY, OR OPTIONALLY A SPECIFIED DIRECTORY
-#-> TAKES TWO STRINGS AS ARGS, IN STRICT ORDER
-#->   - OPTIONAL: PATH TO SEARCH UNDER
-#->   - REQUIRED: STRING TO SEARCH FOR
-#-> RETURNS ERROR CODE OF GREP, WHICH SHOULD BE 0 FOR FOUND STRING AND 1 FOR STRING NOT FOUND
-
-#-> CHECK IF THERE ARE NO ARGS, AND SHOW HELP IF SO
-if [[ -z "${@+x}" ]] ; then
-	cat << EndOfMessage
-Search within the files of a given directory for a given string, or the current directory if no directory is given.
-The -l|--files-with-matches argument, if provided, will be passed to grep to produce a clean list of file names containing the match.
-Usage examples:
-	$0 mystring
-	$0 /var/log mystring
-	$0 "my string with spaces"
-	$0 -l /var/log mystring
-EndOfMessage
-	exit 1
-fi
-
-while :; do
-	case $1 in
-		"-l"|"--files-with-matches")
-			args="${args} --verbose"
-			GREP_ARGS="${GREP_ARGS} --files-with-matches"
-		;;
-		-*|--*)
-			echo "Invalid argument ($1) provided."
-			exit 1
-		;;
-		*)
-			break
-		;;
-	esac
-	shift
-done
-
-#-> CHECK IF THERE'S TWO (IMPLIED: OR MORE) ARGS
-if [[ ! -z "${2+x}" ]] ; then
-	#-> IF THERE IS, CHECK IF THE FIRST ARG EXISTS AS A DIRECTORY
-	if [ -d "${1}" ]; then
-		DIR="${1}"
-		shift
-	else
-		echo "Invalid directory specified."
-		exit 1
-	fi
-else
-	DIR=.
-fi
-
-STR=${@}
-
-find ${DIR} -type f -print0 | xargs -0 grep ${GREP_ARGS} "${STR}"
-
-exit $?
+case $1 in
+	--help|-h)
+		echo "Usage: findfile <path> <string>"
+	;;
+	*)
+		find "$1" -type f -name "$2"
+		exit $?
+	;;
+esac
