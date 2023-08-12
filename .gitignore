@@ -1,3 +1,4 @@
+workspaces.code-workspace
 .zcompdump
 history*
 binconf/*.conf
