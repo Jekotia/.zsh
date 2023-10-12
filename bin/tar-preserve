@@ -1,0 +1,39 @@
+#! /bin/bash
+
+args=()
+
+for var in "$@" ; do
+	if [ "$#" -eq 2 ] ; then
+		source="${var}"
+	elif [ "$#" -eq 1 ] ; then
+		destination="${var}"
+	else
+		args+=("${var}")
+	fi
+	shift
+done
+
+#echo "args: $args"
+#echo "source: $source"
+#echo "destination: $destination"
+#exit
+
+tar \
+	--create \
+	--recursion \
+	--atime-preserve \
+	--numeric-owner \
+	--preserve-permissions \
+	--acls				`#Enable the POSIX ACLs support` \
+	--selinux			`#Enable the SELinux context support` \
+	--xattrs			`#Enable extended attributes support` \
+	--auto-compress		`#use archive suffix to determine the compression program` \
+	--dereference		`#follow symlinks; archive and dump the files they point to` \
+`#	--one-file-system	stay in local file system when creating archive` \
+	--check-links		`#print a message if not all links are dumped` \
+	--totals			`#[=SIGNAL] #print total bytes after processing the archive; with an argument - print total bytes when this SIGNAL is delivered; Allowed signals are: SIGHUP, SIGQUIT, SIGINT, SIGUSR1 and SIGUSR2; the names without SIG prefix are also accepted` \
+	"${args[@]}" \
+	"${source}" \
+	-f "${destination}"
+
+#	--verbose \
