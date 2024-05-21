@@ -22,6 +22,3 @@ for binPath in "${binPaths[@]}" ; do
 		#echo "${binPath}:${PATH}"
 	fi
 done
-
-# if running on cygwin, fix previously identified path issues in that environment
-{ is_cygwin && _fixpath ; } || { ! is_cygwin && return 0 ; }

@@ -18,38 +18,21 @@ ssh_host="saturn"	; hostname | grep -q "$ssh_host" && { ssh_keyfiles+=("${HOME}/
 [[ "$USERNAME" == "pi" ]] &&  { ssh_keyfiles+=("id_interpi"); }
 
 #>> ssh-agent setup
-if is_cygwin ; then
-	# startup of the ssh-agent
-	AGENT_PID=$(pgrep -x ssh-agent)
-	#if [ $? -ne 0 ]; then
-		#echo "---- INFO: ${ZDOTDIR}/rcwin: Starting SSH Agent!"
-
-		eval `ssh-agent -s` > /dev/null
-		trap 'kill $SSH_AGENT_PID' EXIT
-
-		set SSH_AUTH_SOCK $SSH_AUTH_SOCK
-		set SSH_AGENT_PID $SSH_AGENT_PID
-
-		#echo "---- INFO: ${ZDOTDIR}/rcwin: SSH Agent running (PID: $SSH_AGENT_PID)"
-	#else
-		#echo "---- INFO: ${ZDOTDIR}/rcwin: SSH Agent already running (PID: $AGENT_PID)"
-	#fi
-else
-	#-> https://stackoverflow.com/a/18915067
-	SSH_ENV="$HOME/.ssh/environment"
-	# Source SSH settings, if applicable
-	if [ -f "${SSH_ENV}" ]; then
-		# shellcheck disable=SC1090
-		source "${SSH_ENV}" > /dev/null
-		# shellcheck disable=SC2009 # pgrep doesn't seem to be able to satisfy my needs here, which is verifying if ssh-agent is already running by checking the saved PID and then verifying that PID is for an ssh-agent process
-		#ps ${SSH_AGENT_PID} doesn't work under cywgin
-		ps -ef | grep "${SSH_AGENT_PID}" | grep ssh-agent$ > /dev/null || {
-			start_ssh_agent "${SSH_ENV}"
-		}
-	else
+#-> https://stackoverflow.com/a/18915067
+SSH_ENV="$HOME/.ssh/environment"
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+	# shellcheck disable=SC1090
+	source "${SSH_ENV}" > /dev/null
+	# shellcheck disable=SC2009 # pgrep doesn't seem to be able to satisfy my needs here, which is verifying if ssh-agent is already running by checking the saved PID and then verifying that PID is for an ssh-agent process
+	#ps ${SSH_AGENT_PID} doesn't work under cywgin
+	ps -ef | grep "${SSH_AGENT_PID}" | grep ssh-agent$ > /dev/null || {
 		start_ssh_agent "${SSH_ENV}"
-	fi
+	}
+else
+	start_ssh_agent "${SSH_ENV}"
 fi
+
 #>> Add keyfiles to ssh-agent
 for keyfile in "${ssh_keyfiles[@]}" ; do
 	if [ -f "${keyfile}" ] ; then

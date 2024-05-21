@@ -8,10 +8,5 @@ if is_linux ; then
 	fi
 	alias apt-search="dpkg-query -L"
 	alias composer="sudo -uapache composer"
-#elif is_wsl ; then
-	#alias
-elif is_cygwin ; then
-	#alias ping='cygping'
-	#alias cyg-update
-	alias tracert='mtr'
+
 fi

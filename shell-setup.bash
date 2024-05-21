@@ -27,11 +27,12 @@ fi
 $pkgMgr -y install wget curl nano zsh git bc
 
 if [[ ! "$2" == "--local" ]] ; then
-	cd $origHome
+	cd "$origHome" || exit 1
 	echo --- Cloning \'.zsh\' from origin
-	sudo -u $origUser git clone --recurse-submodules ${zshSource} \
-	&& chown -R $origUser:$origUser $origHome/.zsh
+	sudo -u "$origUser" git clone --recurse-submodules ${zshSource} \
+	&& chown -R "$origUser":"$origUser" "$origHome"/.zsh
 
+	#shellcheck disable=SC2181
 	if [[ "$?" != "0" ]] ; then exit 1 ; fi
 fi
 
@@ -53,16 +54,16 @@ else
 		ln -s "${origHome}/.zsh/extras/nanorc.custom" "${origHome}/.nanorc" || echo "Failed to create link"
 
 		echo "Setting ownership of ~/.nanorc"
-		chown $origUser:$origUser $origHome/.nanorc || echo "Failed to set ownership"
+		chown "$origUser":"$origUser" "$origHome"/.nanorc || echo "Failed to set ownership"
 	fi
 fi
 
-cd $origHome/.zsh/extras/powerline-fonts/
-sudo -u $origUser sh ./install.sh
+cd "$origHome"/.zsh/extras/powerline-fonts/ || exit 1
+sudo -u "$origUser" sh ./install.sh
 
-cd $origHome/.zsh/extras/
-sudo -u $origUser sh ./awesome-terminal-fonts-setup.sh
+cd "$origHome"/.zsh/extras/ || exit 1
+sudo -u "$origUser" sh ./awesome-terminal-fonts-setup.sh
 
 echo "Linking .tmux.conf"
-ln -s $origHome/.zsh/.tmux.conf $origHome/.tmux.conf
-ln -s $origHome/.zsh/.tmux $origHome/.tmux
+ln -s "$origHome"/.zsh/.tmux.conf "$origHome"/.tmux.conf
+ln -s "$origHome"/.zsh/.tmux "$origHome"/.tmux

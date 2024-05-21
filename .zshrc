@@ -21,11 +21,9 @@ fi
 
 ##>> NO OUTPUT SHOULD BE GENERATED AFTER THIS POINT DUE TO P10K INSTANT PROMPT
 #>> p10k instant prompt
-if ! is_cygwin ; then
-	verbose "p10k instant prompt"
-	#shellcheck disable=SC1091
-	source "${ZDOTDIR}"/.zshrc.d/snippets/p10k_instant_prompt.zsh || return 1
-fi
+verbose "p10k instant prompt"
+#shellcheck disable=SC1091
+source "${ZDOTDIR}"/.zshrc.d/snippets/p10k_instant_prompt.zsh || return 1
 
 #>> Export values
 #-> If we're NOT within TMUX, set the term. Otherwise, we leave it unset for .tmux.conf to handle
@@ -78,7 +76,7 @@ fi
 
 if ! grep -f "${ZDOTDIR}"/ref/gitconfig ~/.gitconfig > /dev/null ; then
 	echo "Adding contents of '${ZDOTDIR}/ref/gitconfig' to '~/.gitconfig'"
-	cat ""/ref/gitconfig >> ~/.gitconfig
+	cat "${ZDOTDIR}"/ref/gitconfig >> ~/.gitconfig
 fi
 
 # shellcheck source=.zshrc.d/snippets/completions.bash

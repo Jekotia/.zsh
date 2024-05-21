@@ -1,33 +1,20 @@
 #! /usr/bin/env bash
 
-if [[ "$(< /proc/sys/kernel/osrelease)" == *Microsoft ]]; then
-	readonly platform="wsl"
-elif uname | grep "CYGWIN" > /dev/null 2>&1 ; then
-	readonly platform="cygwin"
-else
-	readonly platform="linux"
-fi
-
-verbose "Platform: $platform"
-
 function is_wsl() {
-	if [[ "${platform}" == "wsl" ]]; then
+	if grep -q "WSL" /proc/sys/kernel/osrelease; then
+		verbose "Platform: WSL"
 		return 0
 	else
-		return 1
-	fi
-}
-function is_cygwin() {
-	if [[ "${platform}" == "cygwin" ]]; then
-		return 0
-	else
+		verbose "Platform: Not WSL"
 		return 1
 	fi
 }
 function is_linux() {
-	if [[ "${platform}" == "linux" ]]; then
+	if ! is_wsl ; then
+		verbose "Platform: Linux"
 		return 0
 	else
+		verbose "Platform: Not Linux"
 		return 1
 	fi
 }

@@ -7,18 +7,19 @@ case $1 in
 			-f|--force)
 				args="--shell=bash"
 			;;
+			*)
+				args=
+			;;
 		esac
 		# -s bash \
+		#shellcheck disable=SC2046 disable=SC2086
 		shellcheck $args \
 			.zshrc \
-			.zshrc.d/init.bash \
-			.zshrc.d/aliases/*.bash \
-			.zshrc.d/functions/*.bash \
-			.zshrc.d/snippets/*.bash \
-			.zshrc.d/widgets/*.bash
+			$(find .zshrc.d/ -name "*.bash")
 	;;
 	tooling)
-		shellcheck \
+		#shellcheck disable=SC2086
+		shellcheck $args \
 			install-hooks.bash \
 			shell-remote.bash \
 			shell-setup-local.bash \
