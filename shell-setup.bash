@@ -64,6 +64,24 @@ sudo -u "$origUser" sh ./install.sh
 cd "$origHome"/.zsh/extras/ || exit 1
 sudo -u "$origUser" sh ./awesome-terminal-fonts-setup.sh
 
-echo "Linking .tmux.conf"
-ln -s "$origHome"/.zsh/.tmux.conf "$origHome"/.tmux.conf
-ln -s "$origHome"/.zsh/.tmux "$origHome"/.tmux
+if [[ -L "$origHome"/.tmux.conf && -f "$origHome"/.tmux.conf ]] ; then
+	echo "Link already exists for .tmux.conf, skipping"
+else
+	echo "Linking .tmux.conf"
+	if [[ -f "$origHome"/.tmux.conf ]] ; then
+		echo "Removing existing file"
+		rm "$origHome"/.tmux.conf
+	fi
+	ln -sv "$origHome"/.zsh/.tmux.conf "$origHome"/.tmux.conf
+fi
+
+if [[ -L "$origHome"/.tmux && -d "$origHome"/.tmux ]] ; then
+	echo "Link already exists for .tmux, skipping"
+else
+	echo "Linking .tmux"
+	if [[ -d "$origHome"/.tmux ]] ; then
+		echo "Removing existing directory"
+		rm -f "$origHome"/.tmux
+	fi
+	ln -sv "$origHome"/.zsh/.tmux "$origHome"/.tmux
+fi
