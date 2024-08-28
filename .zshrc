@@ -7,8 +7,10 @@ source "${ZDOTDIR}"/.zshrc.d/init.bash || return 1
 source_directory "${ZDOTDIR}/.zshrc.d/functions" "*" || return 1
 source_directory "${ZDOTDIR}/.zshrc.d/widgets" "*" || return 1
 
-#shellcheck source=.zshrc.d/snippets/ssh.bash
-source "${ZDOTDIR}/.zshrc.d/snippets/ssh.bash" || return 1
+if ! is_wsl ; then
+	#shellcheck source=.zshrc.d/snippets/ssh.bash
+	source "${ZDOTDIR}/.zshrc.d/snippets/ssh.bash" || return 1
+fi
 # source_directory "${ZDOTDIR}/.zshrc.d/snippets" "*" || return 1
 
 #>> Config arrays
