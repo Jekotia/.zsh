@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
-alias ncdu='ncdu -x -e -r --exclude-kernfs --confirm-quit -2'
+#alias ncdu='ncdu -x -e -r --exclude-kernfs --confirm-quit -2'
+alias ncdu='ncdu -x -e --exclude-kernfs --confirm-quit -2'
 
 # ncdu <options> <directory>
 #   -h,--help                  This help message
