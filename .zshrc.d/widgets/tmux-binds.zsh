@@ -58,7 +58,7 @@ function _call_tmux_binds_print_keys() {
 }
 
 _call_tmux_binds() {
-	local CONF_FILE="${HOME}/.tmux.conf"
+	local CONF_FILE="${HOME}/.tmux/conf.d/input.conf"
 	local BIND_INFOS_PREFIX="# INFO_BIND: "
 	# shellcheck disable=SC2155
 	local PREFIX="$(\grep -m 1 'INFO_BIND: Prefix: ' "${CONF_FILE}" | cut -d ':' -f 3 | sed 's|^ \(.*\)|\1|')"
