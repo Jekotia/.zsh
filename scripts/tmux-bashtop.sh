@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 SESSION_NAME="bashtop"
 
 if tmux ls | grep "${SESSION_NAME}" ; then

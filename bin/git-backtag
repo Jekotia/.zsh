@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
 #
 # A custom git command that implements backdating tags as described in
 # https://git-scm.com/docs/git-tag#_on_backdating_tags .

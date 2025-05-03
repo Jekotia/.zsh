@@ -1,3 +1,3 @@
-#! /bin/bash
+#! /usr/bin/env bash
 sudo nginx -t \
 && sudo systemctl start nginx

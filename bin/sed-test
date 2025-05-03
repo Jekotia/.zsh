@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 ## This script is for easily testing regex replacment in sed
 ## Ref: echo "Listen 80" > hello.txt && sed -i -e 's/Listen\s80/Listen 1080/g' test.txt && cat test.txt
 tmp=/tmp/sed-test

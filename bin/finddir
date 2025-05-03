@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 find "$1" -type d -name "$2"
 exit $?

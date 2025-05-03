@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 AppName="$*"
 SearchDirectory="${HOME}/.local/share/applications/"
 

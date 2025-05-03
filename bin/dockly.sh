@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 function pid_file_exists() {
 	if [ -f "${TEMP_TUNNEL_PID}" ] ; then
 		#echo "DEBUG: Found existing PID file"

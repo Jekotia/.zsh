@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 sudo systemctl disable docker.service \
 && printline \
 && sudo systemctl disable docker.socket

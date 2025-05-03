@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 keyUser=weechat
 keyPath=/home/$keyUser/.weechat/certs

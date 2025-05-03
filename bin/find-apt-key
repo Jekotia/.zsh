@@ -1,1 +1,2 @@
+#! /usr/bin/env bash
 apt-key list 2>/dev/null | grep -B 2 -A 1 $@ | grep -ve "^$"

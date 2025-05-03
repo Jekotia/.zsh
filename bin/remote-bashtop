@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 TMUX_SESSION_NAME="remotemonitor"
 
 function sshCmd() {

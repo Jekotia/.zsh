@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 source ~/.zsh/binconf/mysqlutil.conf
 
 function _create_database () {

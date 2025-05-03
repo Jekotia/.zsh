@@ -1,4 +1,4 @@
-#! /usr/bin/zsh
+#! /usr/bin/env zsh
 
 
 # shellcheck source=.zshrc.d/init.bash

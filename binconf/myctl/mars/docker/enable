@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 sudo systemctl enable docker.service \
 && printline \
 && sudo systemctl enable docker.socket

@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 #### BEGIN CONFIG ####
 confdir="${HOME}/.zsh/binconf/myctl"
 ##### END CONFIG #####
